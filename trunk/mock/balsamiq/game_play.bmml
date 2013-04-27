@@ -1,0 +1,196 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1428" measuredH="848" mockupW="1428" mockupH="848">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::Canvas" x="0" y="0" w="1366" h="768" measuredW="100" measuredH="70" zOrder="0" locked="false" isInGroup="-1"/>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::VCurly" x="1366" y="0" w="62" h="761" measuredW="180" measuredH="140" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>left</direction>
+        <text>768px</text>
+      </controlProperties>
+    </control>
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::HCurly" x="0" y="768" w="1366" h="80" measuredW="200" measuredH="80" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>top</direction>
+        <text>1366px</text>
+      </controlProperties>
+    </control>
+    <control controlID="25" controlTypeID="com.balsamiq.mockups::FieldSet" x="460" y="560" w="350" h="168" measuredW="200" measuredH="170" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Unit</text>
+      </controlProperties>
+    </control>
+    <control controlID="26" controlTypeID="com.balsamiq.mockups::Canvas" x="80" y="560" w="300" h="168" measuredW="100" measuredH="70" zOrder="4" locked="false" isInGroup="-1"/>
+    <control controlID="42" controlTypeID="com.balsamiq.mockups::Button" x="500" y="32" w="366" h="64" measuredW="89" measuredH="27" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>End%20of%20tour</text>
+      </controlProperties>
+    </control>
+    <control controlID="43" controlTypeID="com.balsamiq.mockups::HCurly" x="13" y="95" w="488" h="80" measuredW="200" measuredH="80" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>500px</text>
+      </controlProperties>
+    </control>
+    <control controlID="44" controlTypeID="com.balsamiq.mockups::HCurly" x="501" y="95" w="365" h="28" measuredW="200" measuredH="80" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>13</size>
+        <text>366px</text>
+      </controlProperties>
+    </control>
+    <control controlID="45" controlTypeID="com.balsamiq.mockups::VCurly" x="866" y="0" w="180" h="36" measuredW="180" measuredH="140" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>32px</text>
+      </controlProperties>
+    </control>
+    <control controlID="48" controlTypeID="com.balsamiq.mockups::VCurly" x="866" y="32" w="180" h="64" measuredW="180" measuredH="140" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>64px</text>
+      </controlProperties>
+    </control>
+    <control controlID="51" controlTypeID="com.balsamiq.mockups::HCurly" x="0" y="514" w="80" h="46" measuredW="200" measuredH="80" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>bottom</direction>
+        <text>80px</text>
+      </controlProperties>
+    </control>
+    <control controlID="60" controlTypeID="com.balsamiq.mockups::HCurly" x="0" y="728" w="460" h="38" measuredW="200" measuredH="80" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>top</direction>
+        <text>460px</text>
+      </controlProperties>
+    </control>
+    <control controlID="65" controlTypeID="com.balsamiq.mockups::Label" x="120" y="48" w="269" h="-1" measuredW="204" measuredH="32" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <align>center</align>
+        <size>24</size>
+        <text>Player%20X%2C%20tour%2C%20time</text>
+        <underline>true</underline>
+      </controlProperties>
+    </control>
+    <control controlID="66" controlTypeID="com.balsamiq.mockups::FieldSet" x="1000" y="474" w="255" h="255" measuredW="200" measuredH="170" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Minimap</text>
+      </controlProperties>
+    </control>
+    <control controlID="68" controlTypeID="com.balsamiq.mockups::Image" x="460" y="365" w="224" h="164" measuredW="1200" measuredH="927" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <src>./assets/tank_concept.png</src>
+      </controlProperties>
+    </control>
+    <control controlID="69" controlTypeID="com.balsamiq.mockups::ProgressBar" x="522" y="345" w="-1" h="-1" measuredW="100" measuredH="20" zOrder="16" locked="false" isInGroup="-1"/>
+    <control controlID="70" controlTypeID="com.balsamiq.mockups::Label" x="551" y="324" w="-1" h="-1" measuredW="42" measuredH="21" zOrder="17" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>HP%20Bar</text>
+      </controlProperties>
+    </control>
+    <control controlID="71" controlTypeID="com.balsamiq.mockups::List" x="98" y="596" w="-1" h="-1" measuredW="100" measuredH="126" zOrder="18" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Heli%0ATank%0ATank%0AB.Tank%0AArty</text>
+      </controlProperties>
+    </control>
+    <control controlID="72" controlTypeID="com.balsamiq.mockups::Label" x="126" y="567" w="-1" h="-1" measuredW="45" measuredH="21" zOrder="19" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Unit%20list</text>
+      </controlProperties>
+    </control>
+    <control controlID="73" controlTypeID="com.balsamiq.mockups::Link" x="255" y="570" w="-1" h="-1" measuredW="80" measuredH="26" zOrder="20" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>20</size>
+        <text>next%20unit</text>
+      </controlProperties>
+    </control>
+    <control controlID="74" controlTypeID="com.balsamiq.mockups::Link" x="247" y="620" w="-1" h="-1" measuredW="96" measuredH="26" zOrder="21" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>20</size>
+        <text>switch%20unit</text>
+      </controlProperties>
+    </control>
+    <control controlID="76" controlTypeID="com.balsamiq.mockups::HRule" x="213" y="606" w="150" h="-1" measuredW="100" measuredH="10" zOrder="22" locked="false" isInGroup="-1"/>
+    <control controlID="77" controlTypeID="com.balsamiq.mockups::VRule" x="213" y="560" w="-1" h="162" measuredW="10" measuredH="100" zOrder="23" locked="false" isInGroup="-1"/>
+    <control controlID="78" controlTypeID="com.balsamiq.mockups::List" x="478" y="592" w="123" h="126" measuredW="100" measuredH="126" zOrder="24" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Movement%20points%0AStats%0AHP</text>
+      </controlProperties>
+    </control>
+    <control controlID="79" controlTypeID="com.balsamiq.mockups::Button" x="715" y="634" w="-1" h="-1" measuredW="75" measuredH="27" zOrder="25" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>18</size>
+        <text>Attack</text>
+      </controlProperties>
+    </control>
+    <control controlID="80" controlTypeID="com.balsamiq.mockups::Button" x="725" y="588" w="-1" h="-1" measuredW="65" measuredH="27" zOrder="26" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>18</size>
+        <text>Move</text>
+      </controlProperties>
+    </control>
+    <control controlID="81" controlTypeID="com.balsamiq.mockups::Button" x="650" y="676" w="-1" h="-1" measuredW="140" measuredH="27" zOrder="27" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>18</size>
+        <text>Special%20attack</text>
+      </controlProperties>
+    </control>
+    <control controlID="82" controlTypeID="com.balsamiq.mockups::VCurly" x="811" y="568" w="61" h="159" measuredW="180" measuredH="140" zOrder="28" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>168px</text>
+      </controlProperties>
+    </control>
+    <control controlID="83" controlTypeID="com.balsamiq.mockups::VCurly" x="380" y="562" w="90" h="159" measuredW="180" measuredH="140" zOrder="29" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>168px</text>
+      </controlProperties>
+    </control>
+    <control controlID="84" controlTypeID="com.balsamiq.mockups::HCurly" x="80" y="518" w="300" h="38" measuredW="200" measuredH="80" zOrder="30" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>bottom</direction>
+        <text>300px</text>
+      </controlProperties>
+    </control>
+    <control controlID="85" controlTypeID="com.balsamiq.mockups::VCurly" x="805" y="0" w="67" h="570" measuredW="180" measuredH="140" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>560px</text>
+      </controlProperties>
+    </control>
+    <control controlID="86" controlTypeID="com.balsamiq.mockups::HCurly" x="460" y="728" w="351" h="38" measuredW="200" measuredH="80" zOrder="31" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>top</direction>
+        <text>350px</text>
+      </controlProperties>
+    </control>
+    <control controlID="87" controlTypeID="com.balsamiq.mockups::Arrow" x="394" y="560" w="411" h="10" measuredW="150" measuredH="100" zOrder="32" locked="false" isInGroup="-1">
+      <controlProperties>
+        <backgroundAlpha>0.5</backgroundAlpha>
+        <color>10066329</color>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="88" controlTypeID="com.balsamiq.mockups::VCurly" x="1194" y="486" w="61" h="243" measuredW="180" measuredH="140" zOrder="33" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>right</direction>
+        <text>255px</text>
+      </controlProperties>
+    </control>
+    <control controlID="89" controlTypeID="com.balsamiq.mockups::HCurly" x="1000" y="691" w="255" h="38" measuredW="200" measuredH="80" zOrder="34" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>bottom</direction>
+        <text>255px</text>
+      </controlProperties>
+    </control>
+    <control controlID="90" controlTypeID="com.balsamiq.mockups::VCurly" x="1255" y="0" w="67" h="474" measuredW="180" measuredH="140" zOrder="35" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>474px</text>
+      </controlProperties>
+    </control>
+    <control controlID="91" controlTypeID="com.balsamiq.mockups::HCurly" x="0" y="800" w="1000" h="39" measuredW="200" measuredH="80" zOrder="36" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>top</direction>
+        <text>1000px</text>
+      </controlProperties>
+    </control>
+    <control controlID="92" controlTypeID="com.balsamiq.mockups::Arrow" x="998" y="728" w="10" h="72" measuredW="150" measuredH="100" zOrder="37" locked="false" isInGroup="-1">
+      <controlProperties>
+        <backgroundAlpha>0.5</backgroundAlpha>
+        <color>10066329</color>
+        <text/>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
