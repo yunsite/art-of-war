@@ -28,6 +28,7 @@ public class Unit : MonoBehaviour
 	//nie wiem jak powinna dzialac ta metoda
 	public void Attack(Unit enemy)
 	{
+		
 		throw new NotImplementedException();
 	}
 	
