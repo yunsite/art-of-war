@@ -6,38 +6,37 @@ using UnityEngine;
 public class GameController
 {
 	
-	//odkomentowac potem
-	//public GameState CurrentGameState { get; set; }
+	public GameState CurrentGameState { get; set; }
 	
 	
 	public void GoToMainMenuState()
 	{
-		throw new NotImplementedException();
+		CurrentGameState = CurrentGameState.SwitchState(GameStateEnum.MainMenu);
 	}
 	
 	public void GoToMapSelectionState()
 	{
-		throw new NotImplementedException();
+		CurrentGameState = CurrentGameState.SwitchState(GameStateEnum.MapSelection);
 	}
 	
 	public void GoToInGameState()
 	{
-		throw new NotImplementedException();
+		CurrentGameState = CurrentGameState.SwitchState(GameStateEnum.InGame);
 	}	
 	
 	public void GoToHighScoreState()	
 	{
-		throw new NotImplementedException();
+		CurrentGameState = CurrentGameState.SwitchState(GameStateEnum.HighScores);
 	}
 
 	public void GoToHelpState()	
 	{
-		throw new NotImplementedException();
+		CurrentGameState = CurrentGameState.SwitchState(GameStateEnum.Help);
 	}	
 	
 	public void GoToPlaceUnitsState()
 	{
-		throw new NotImplementedException();
+		CurrentGameState = CurrentGameState.SwitchState(GameStateEnum.PlaceUnits);
 	}
 }
 
