@@ -17,7 +17,7 @@ public class Unit : MonoBehaviour
 	
 	public EventHandler Clicked;
 	
-	void OnClick () 
+	public void OnClick () 
 	{
 		if (Clicked != null) 
 		{
