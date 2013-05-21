@@ -9,7 +9,8 @@ namespace AssemblyCSharp
 		
 		private void Initialize()
 		{
-			new GameState();
+			//new GameState();
+			throw new NotImplementedException();
 		}
 		
 		public GameManager Instance()
