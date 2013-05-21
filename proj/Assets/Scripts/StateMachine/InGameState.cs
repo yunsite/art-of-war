@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class InGameState : GameState
 {
+	public InGameState (GameController controller) : base (controller) { }
+	
 	private void ShowInGameMenu()
 	{
 		throw new NotImplementedException();

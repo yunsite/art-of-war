@@ -1,10 +1,15 @@
 using System;
-using UnityEngine;
 
-//wiem ze nie w mojej kwestii byla implementacja tego ale potrzebniwalem chociaz prototypu (Marek Kokot)
+// wiem ze nie w mojej kwestii byla implementacja tego ale potrzebniwalem chociaz prototypu (Marek Kokot)
+// dodałem swoje zmiany potrzebne do implementacji i przetestowania MainMenuState (Zbigniew Prasak)
 public abstract class GameState
 {
-	private GameController parent;
+	protected GameController parent;
+	
+	protected GameState(GameController parent) {
+		if (parent == null) throw new ArgumentNullException("parent");
+		this.parent = parent;
+	}
 
 	public GameState SwitchState(GameStateEnum nextState)
 	{
@@ -18,7 +23,7 @@ public abstract class GameState
 			return null;//(GameState) new InGameState();
 		}
 		if(nextState.Equals(GameStateEnum.MainMenu)) {
-			return null;//(GameState) new MainMenuState();
+			return new MainMenuState(parent);
 		}
 		if(nextState.Equals(GameStateEnum.MapSelection)) {
 			return null;//(GameState) new MapSelectionState();
