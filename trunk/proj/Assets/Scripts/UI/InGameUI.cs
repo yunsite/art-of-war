@@ -15,11 +15,7 @@ public class InGameUI : UILogic {
 	#endregion
 	
 	#region In game menu controls
-	public ButtonLogic ResumeButton;
-	public ButtonLogic RestartButton;
-	public ButtonLogic MainMenuButton;
-	public ButtonLogic HelpButton;
-	public ButtonLogic QuitButton;
+	public InGameMenuUI InGameMenuUIInstance;
 	#endregion
 
 }
