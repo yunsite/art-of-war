@@ -1,22 +1,25 @@
 using System;
 using UnityEngine;
 
-namespace AssemblyCSharp
+public class GameManager : MonoBehaviour
 {
-	public class GameManager : MonoBehaviour
+	//private HighScore highScoreInstance;
+	
+	public GameUI GameUIInstance;
+	public GameController GameControllerInstance;
+	
+	void Awake () {
+		// Obiekt do którego przyłączony jest GameManager powinien przetrwać przełądowanie sceny.
+		DontDestroyOnLoad(transform.gameObject);
+	}
+	
+	private void Initialize()
 	{
-		//private HighScore highScoreInstance;
-		
-		private void Initialize()
-		{
-			//new GameState();
-			throw new NotImplementedException();
-		}
-		
-		public GameManager Instance()
-		{
-			throw new NotImplementedException();
-		}
+		//new GameState();
+	}
+	
+	public static GameManager Instance()
+	{
+		return (GameManager)FindObjectOfType(typeof(GameManager));
 	}
 }
-
