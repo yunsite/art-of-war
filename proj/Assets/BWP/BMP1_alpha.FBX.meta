@@ -185,7 +185,7 @@ ModelImporter:
       transformMask: []
     - name: fire
       takeName: Take 001
-      firstFrame: 241
+      firstFrame: 240
       lastFrame: 250.000015
       wrapMode: 1
       orientationOffsetY: 0
