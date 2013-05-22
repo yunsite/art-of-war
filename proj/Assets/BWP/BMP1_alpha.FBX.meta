@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7c8b9ad66741b2a4ea9b59c70c0f891e
+guid: df2ece54bcde20a4d846ccff66c63ae1
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
@@ -185,7 +185,7 @@ ModelImporter:
       transformMask: []
     - name: fire
       takeName: Take 001
-      firstFrame: 240
+      firstFrame: 241
       lastFrame: 250.000015
       wrapMode: 1
       orientationOffsetY: 0
@@ -208,7 +208,7 @@ ModelImporter:
   meshes:
     lODScreenPercentages: []
     globalScale: .100000001
-    meshCompression: 2
+    meshCompression: 1
     addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
