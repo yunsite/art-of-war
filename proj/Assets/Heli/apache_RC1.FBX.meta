@@ -8,11 +8,15 @@ ModelImporter:
     100004: hull
     100006: mainRotor
     100008: rearRotor
+    100010: leftRocketTube
+    100012: rightRocketTube
     400000: //RootNode
     400002: heliMesh
     400004: hull
     400006: mainRotor
     400008: rearRotor
+    400010: leftRocketTube
+    400012: rightRocketTube
     4300000: heliMesh
     7400000: none
     7400002: hovering
