@@ -4,7 +4,17 @@ using UnityEngine;
 
 public class InGameState : GameState
 {
-	public InGameState (GameController controller) : base (controller) { }
+	
+	private InGameUI ui;
+	
+	public InGameState (GameController controller) : base (controller) {
+		if (Application.loadedLevelName != "HillyTestScene") 
+			Application.LoadLevel("HillyTestScene");
+		GameManager manager = GameManager.Instance();
+		ui = manager.GameUIInstance.InGameUIInstance;
+		ui.EndTurnButton.ButtonClicked += EndTurnButtonClickedHandler;
+		ui.Show();
+	}
 	
 	private void ShowInGameMenu()
 	{
@@ -83,7 +93,7 @@ public class InGameState : GameState
 	
 	public void EndTurnButtonClickedHandler(object sender, EventArgs args)
 	{
-		throw new NotImplementedException();
+		Debug.Log("End of tour button cicked");
 	}
 }
 
