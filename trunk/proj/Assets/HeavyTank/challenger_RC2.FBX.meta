@@ -26,6 +26,8 @@ ModelImporter:
     100040: hull
     100042: rootBone
     100044: turret
+    100046: hullMesh
+    100048: turretMesh
     400000: BoneL1
     400002: BoneL2
     400004: BoneL3
@@ -49,11 +51,15 @@ ModelImporter:
     400040: hull
     400042: rootBone
     400044: turret
+    400046: hullMesh
+    400048: turretMesh
     2300000: turret
     3300000: turret
     4300000: hull
     4300002: turret
     4300004: cannonMesh
+    4300006: hullMesh
+    4300008: turretMesh
     7400000: none
     7400002: forward
     7400004: backward
@@ -64,6 +70,8 @@ ModelImporter:
     11100000: //RootNode
     13700000: cannonMesh
     13700002: hull
+    13700004: hullMesh
+    13700006: turretMesh
   materials:
     importMaterials: 1
     materialName: 0
@@ -185,7 +193,7 @@ ModelImporter:
     - name: fire
       takeName: Take 001
       firstFrame: 241
-      lastFrame: 270
+      lastFrame: 255
       wrapMode: 1
       orientationOffsetY: 0
       level: 0
