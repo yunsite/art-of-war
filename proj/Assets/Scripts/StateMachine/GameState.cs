@@ -20,7 +20,7 @@ public abstract class GameState
 			return null;//(GameState) new HighScoreState();
 		}
 		if(nextState.Equals(GameStateEnum.InGame)) {
-			return null;//(GameState) new InGameState();
+			return new InGameState(parent);
 		}
 		if(nextState.Equals(GameStateEnum.MainMenu)) {
 			return new MainMenuState(parent);

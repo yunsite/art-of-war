@@ -16,6 +16,8 @@ public class MainMenuState : GameState {
 	
 	private void StartButtonClickedHandler(object sender, EventArgs args) {
 		Debug.Log("Start button clicked");
+		ui.Hide();
+		parent.GoToInGameState();
 	}
 	
 	private void HighScoresButtonClickedHandler(object sender, EventArgs args) {
