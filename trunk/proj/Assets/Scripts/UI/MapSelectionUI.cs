@@ -1,8 +1,8 @@
 public class MapSelectionUI : UILogic {
 	
-	public UITexture PrevMapImage;
-	public UITexture CurrMapImage;
-	public UITexture NextMapImage;
+	public UISprite PrevMapImage;
+	public UISprite CurrMapImage;
+	public UISprite NextMapImage;
 	public UIInput Player1Name;
 	public UIInput Player2Name;
 	public ButtonLogic BackButton;
