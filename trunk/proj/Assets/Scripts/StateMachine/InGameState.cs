@@ -43,7 +43,7 @@ public class InGameState : GameState
 		}
 		else if(isAtacking && selectedUnit != null)
 		{
-			selectedUnit.Attack((Unit) sender);
+            selectedUnit.Attack((Unit)sender,()=> AttackEnded());
 			BlockUIInput();
 		}
 	}
