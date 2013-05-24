@@ -12,6 +12,7 @@ public class MainMenuState : GameState {
 		ui.ScoreButton.ButtonClicked += HighScoresButtonClickedHandler;
 		ui.HelpButton.ButtonClicked += HelpButtonClickedHandler;
 		ui.ExitButton.ButtonClicked += ExitButtonClickedHandler;
+		ui.Show ();
 	}
 	
 	private void StartButtonClickedHandler(object sender, EventArgs args) {
