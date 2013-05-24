@@ -43,8 +43,8 @@ public class TracksAnimation : MonoBehaviour {
 		float turnLeftWeight = animation[turnLeftClipName].weight;
 		float turnRightWeight = animation[turnRightClipName].weight;
 		
-		float leftDirection = forwardWeight - backwardWeight + turnLeftWeight - turnRightWeight;
-		float rightDirection = forwardWeight - backwardWeight - turnLeftWeight + turnRightWeight;
+		float leftDirection = forwardWeight - backwardWeight - turnLeftWeight + turnRightWeight;
+		float rightDirection = forwardWeight - backwardWeight + turnLeftWeight - turnRightWeight;
 		
 		Vector2 offset = rightTrackMaterial.mainTextureOffset;
 		offset.x += speed * rightSpeedTrim * rightDirection * Time.deltaTime;
