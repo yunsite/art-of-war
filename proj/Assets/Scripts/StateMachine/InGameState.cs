@@ -11,8 +11,8 @@ public class InGameState : GameState
 	private bool isBlocked;
 	
 	public InGameState (GameController controller) : base (controller) {
-		if (Application.loadedLevelName != "HillyTestScene") 
-			Application.LoadLevel("HillyTestScene");
+		if (Application.loadedLevelName != "MainGameScene") 
+			Application.LoadLevel("MainGameScene");
 		GameManager manager = GameManager.Instance();
 		ui = manager.GameUIInstance.InGameUIInstance;
 		ui.EndTurnButton.ButtonClicked += EndTurnButtonClickedHandler;
