@@ -27,9 +27,10 @@ public class Unit : MonoBehaviour
 	public event EventHandler Clicked;
 	void OnMouseUpAsButton () 
 	{
+
 		if (Clicked != null) 
 		{
-			Clicked (gameObject, new EventArgs());
+			Clicked (this, new EventArgs());
 		}
 	}
 	
