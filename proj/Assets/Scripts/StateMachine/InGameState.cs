@@ -11,16 +11,34 @@ public class InGameState : GameState
 	private bool isBlocked;
 	
 	public InGameState (GameController controller) : base (controller) {
+		GameManager manager = GameManager.Instance();
+		manager.LevelLoadedEvent += LevelLoaded;
 		if (Application.loadedLevelName != "MainGameScene") 
 			Application.LoadLevel("MainGameScene");
-		GameManager manager = GameManager.Instance();
+
 		ui = manager.GameUIInstance.InGameUIInstance;
 		ui.EndTurnButton.ButtonClicked += EndTurnButtonClickedHandler;
 		ui.AttackButton.ButtonClicked += AttackButtonClickedHandler;
 		ui.MoveButton.ButtonClicked += MoveButtonClickedHandler;
 		ui.Show();
+
+
 	}
-	
+
+	public void LevelLoaded(object sender, EventArgs args)
+	{
+		var units = (Unit[])UnityEngine.Object.FindObjectsOfType (typeof(Unit));
+		foreach(var unit in units)
+		{
+			unit.Clicked += UnitClickedEventHandler;
+		}
+		var positionObserver =(PositionObserver) UnityEngine.Object.FindObjectOfType (typeof(PositionObserver));
+		positionObserver.Clicked += TerrainClickedHandler;
+
+		GameManager manager = GameManager.Instance();
+		manager.LevelLoadedEvent -= LevelLoaded;
+	}
+
 	private void ShowInGameMenu()
 	{
 		ui.Show();
@@ -36,14 +54,19 @@ public class InGameState : GameState
 		if(!isAtacking && selectedUnit == null)
 		{
 			selectedUnit = (Unit) sender;
+			Debug.Log("Zmieniam jednostke zaznaczone na "+((Unit) sender).ToString());
 		}
 		else if(!isAtacking && selectedUnit != (Unit) sender)
 		{
 			selectedUnit = (Unit) sender;
+			Debug.Log("Zmieniam jednostke zaznaczona na "+((Unit) sender).ToString());
+			
 		}
 		else if(isAtacking && selectedUnit != null)
 		{
             selectedUnit.Attack((Unit)sender,()=> AttackEnded());
+			Debug.Log("Atakuje jednostka zaznaczona: "+selectedUnit.ToString()+" jednostke: "+((Unit) sender).ToString());
+			
 			BlockUIInput();
 		}
 	}
@@ -137,14 +160,16 @@ public class InGameState : GameState
 		isAtacking = false;
 	}
 	
-	private void TerrainClickedHandler(object sender, EventArgs args) //PositionArgs args)
+	private void TerrainClickedHandler(object sender, PositionEventArgs args) //PositionArgs args)
 	{
 		if(isMoving)
 		{
-			//selectedUnit.MoveToPosition(args.position);
+			selectedUnit.MoveToPosition(args.Position,MovementEnded);
 			BlockUIInput();
 		}
 	}
+
+
 }
 
 
