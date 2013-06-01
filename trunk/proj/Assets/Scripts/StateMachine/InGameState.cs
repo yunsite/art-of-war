@@ -53,12 +53,12 @@ public class InGameState : GameState
 	{
 		if(!isAtacking && selectedUnit == null)
 		{
-			selectedUnit = (Unit) sender;
+			SelectUnit((Unit) sender);
 			Debug.Log("Zmieniam jednostke zaznaczone na "+((Unit) sender).ToString());
 		}
 		else if(!isAtacking && selectedUnit != (Unit) sender)
 		{
-			selectedUnit = (Unit) sender;
+			SelectUnit((Unit) sender);
 			Debug.Log("Zmieniam jednostke zaznaczona na "+((Unit) sender).ToString());
 			
 		}
@@ -68,12 +68,18 @@ public class InGameState : GameState
 			Debug.Log("Atakuje jednostka zaznaczona: "+selectedUnit.ToString()+" jednostke: "+((Unit) sender).ToString());
 			
 			BlockUIInput();
+			selectedUnit.Select();
 		}
 	}
 	
 	private void SelectUnit(Unit unit)
 	{
-		throw new NotImplementedException();
+		if (selectedUnit != null) {
+			selectedUnit.Deselect();
+		}
+		
+		selectedUnit = unit;
+		selectedUnit.Select();
 	}
 	
 	public void RestartGame()
@@ -115,11 +121,6 @@ public class InGameState : GameState
 		throw new NotImplementedException();
 	}
 	
-	private void EmptySpaceClickedHandler(Vector3 worldPosition)
-	{
-		throw new NotImplementedException();
-	}
-	
 	private bool CheckEndGameConditions()
 	{
 		throw new NotImplementedException();
@@ -132,11 +133,13 @@ public class InGameState : GameState
 	
 	public void AttackEnded()
 	{
+		isAtacking = false;
 		UnBlockUIInput();
 	}
 	
 	public void MovementEnded()
 	{
+		isMoving = false;
 		UnBlockUIInput();
 	}
 	
@@ -144,6 +147,7 @@ public class InGameState : GameState
 	{
 		isAtacking = false;
 		isMoving = false;
+		selectedUnit.Deselect();
 		selectedUnit = null;
 		Debug.Log("End of tour button clicked");
 	}
@@ -152,12 +156,14 @@ public class InGameState : GameState
 	{
 		isAtacking = true;
 		isMoving = false;
+		if (selectedUnit != null) selectedUnit.SelectAttack();
 	}
 	
 	private void MoveButtonClickedHandler(object sender, EventArgs args)
 	{
 		isMoving = true;
 		isAtacking = false;
+		if (selectedUnit != null) selectedUnit.SelectMovement();
 	}
 	
 	private void TerrainClickedHandler(object sender, PositionEventArgs args) //PositionArgs args)
@@ -166,6 +172,10 @@ public class InGameState : GameState
 		{
 			selectedUnit.MoveToPosition(args.Position,MovementEnded);
 			BlockUIInput();
+			selectedUnit.Select();
+		} else {
+			selectedUnit.Deselect();
+			selectedUnit = null;
 		}
 	}
 

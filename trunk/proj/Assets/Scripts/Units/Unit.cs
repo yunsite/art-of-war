@@ -10,19 +10,167 @@ public class Unit : MonoBehaviour
 	private Transform selfTransform;
 	private bool isBusy = false;
 	
+	void Awake () {
+		selfTransform = transform;
+		rigidbody.isKinematic = true;
+	}
+	
+	public UnitTypeEnum UnitType;
+	
+	#region Selection items
+	
+	public SelectionMarker Selector;
+	public RangeProjector RangeProjector;
+	
+	public void Select () {
+		SelectionMode mode;
+		float range;
+		if (CanMove() || CanAttack()) {
+			mode = SelectionMode.Default;
+		} else {
+			mode = SelectionMode.NoAction;
+		}
+		
+		SelectRange(mode, 0);
+	}
+	
+	public void SelectMovement () {
+		SelectionMode mode;
+		float range;
+		if (CanMove()) {
+			mode = SelectionMode.Movement;
+			range = MovementStatistics.RemainingRange;
+		} else {
+			mode = SelectionMode.NoAction;
+			range = MovementStatistics.TotalRange;
+		}
+		
+		SelectRange(mode, range);
+	}
+	
+	public void SelectAttack () {
+		SelectionMode mode;
+		if (CanAttack()) {
+			mode = SelectionMode.Attack;
+		} else {
+			mode = SelectionMode.NoAction;
+		}
+		
+		SelectRange(mode, AttackStatistics.Range);
+	}
+	
+	private void SelectRange(SelectionMode mode, float range) {
+		Selector.gameObject.SetActive(true);
+		Selector.SetMode(mode);
+		if (range > 0) {
+			RangeProjector.gameObject.SetActive(true);
+			RangeProjector.SetColor(Selector.GetModeColor(mode));
+			RangeProjector.SetRange(range);
+		} else {
+			RangeProjector.gameObject.SetActive(false);
+		}
+	}
+	
+	public void Deselect () {
+		Selector.gameObject.SetActive(false);
+		RangeProjector.gameObject.SetActive(false);
+	}
+	
+	#endregion
+	
+	#region Movement items
+	
+	[Serializable]
+	public class UnitMovementStatistics {
+		public float RemainingRange = 40;
+		public float TotalRange = 40;
+		public DifficultTerrainMoveAbilityEnum DifficultTerrainMoveAbility;
+	}
+	
+	public UnitMovementStatistics MovementStatistics = new UnitMovementStatistics();
+	
+	public void MoveToPosition(Vector3 worldPosition, Action callback)
+	{
+		float distance = (worldPosition - selfTransform.position).magnitude;
+		if(!isBusy && CanMove(worldPosition)) {
+			MovementStatistics.RemainingRange -= distance;
+			StartCoroutine(Moving(worldPosition, callback));
+		}
+	}
+	
+	public bool CanMove () {
+		return MovementStatistics.RemainingRange > 2;
+	}
+	
+	public bool CanMove (Vector3 targetPosition) {
+		float distance = (targetPosition - selfTransform.position).magnitude;
+		return CanMove() && MovementStatistics.RemainingRange >= distance;
+	}
+	
+	#endregion
+	
+	#region Attack items
+	
+	[Serializable]
+	public class UnitAttackStatistics {
+		public int RemainingQuantity = 2;
+		public int TotalQuantity = 2;
+		public float Power = 5;
+		public float Range = 60;
+	}
+	
+	public UnitAttackStatistics AttackStatistics = new UnitAttackStatistics();
+	
+	public void Attack(Unit enemy, Action callback)
+	{
+		if(!isBusy && CanAttack(enemy.transform.position)) {
+			--AttackStatistics.RemainingQuantity;
+			StartCoroutine(Attacking(enemy, callback));
+		}
+	}
+	
+	public bool CanAttack () {
+		return AttackStatistics.RemainingQuantity > 0;
+	}
+	
+	public bool CanAttack (Vector3 targetPosition) {
+		float distance = (targetPosition - selfTransform.position).magnitude;
+		return CanAttack() && distance <= AttackStatistics.Range;
+	}
+	
+	#endregion
+	
+	#region Health items
+	
+	[Serializable]
+	public class UnitHealthStatistics {
+		public float RemainingPoints = 100;
+		public float TotalPoints = 100;
+		public float Deffence = 4;
+	}
+	
+	public UnitHealthStatistics HealthStatistics = new UnitHealthStatistics();
+	
+	public float GetDamadge(float damage, Unit attacker)
+	{
+		// Na razie podstawowa funkcjonalność.
+		HealthStatistics.RemainingPoints -= damage;
+		// if (HP <= 0) Die();
+		return HealthStatistics.RemainingPoints; // Co ma być wartością zwracana ?
+	}
+	
+	//nie wiem jak implementowac tu pewnie maja leciec jakies efekty umierania najpierw a potem usuwanie ze sceny
+	public void Die()
+	{
+		throw new NotImplementedException();
+	}
+	
+	#endregion
+	
 	public float motionSpeed = 5;
 	public float rotationSpeed = 20;
-
-	public int HP = 100;
-	public byte PlayerOwner;
-	public UnitTypeEnum UnitType;
-	public float MaximalMoveDistance;
-	public float MaximalShootDistance;
-	public float MoveDistanceLeft;
-	public DifficultTerrainMoveAbilityEnum DifficultTerrainMoveAbility;
-	public float AttackValue = 5; //zmienilem nazwe aby nie bylo konfliktu z metoda Attack
-	public float Deffence = 4;
-	public float AttackAreaRadious;
+	
+	#region Events
 	
 	public event EventHandler Clicked;
 	void OnMouseUpAsButton () 
@@ -34,33 +182,9 @@ public class Unit : MonoBehaviour
 		}
 	}
 	
-	void Awake () {
-		selfTransform = transform;
-		rigidbody.isKinematic = true;
-	}
+	#endregion
 	
 	#region Public Methods
-	//nie wiem jak powinna dzialac ta metoda
-	public void Attack(Unit enemy, Action callback)
-	{
-		if(!isBusy) StartCoroutine(Attacking(enemy, callback));
-	}
-	
-	//nie wiem jak ma dzialac ani jaki typ zwracac
-	public int GetDamadge(int damage, Unit attacker)
-	{
-		// Na razie podstawowa funkcjonalność.
-		HP -= damage;
-		// if (HP <= 0) Die();
-		return HP; // Co ma być wartością zwracana ?
-	}
-	
-	//nie wiem czy to dobra implementacja
-	public void MoveToPosition(Vector3 worldPosition, Action callback)
-	{
-		//gameObject.transform.position = worldPosition;
-		if(!isBusy) StartCoroutine(Moving(worldPosition, callback));
-	}
 	
 	//nie wiem jak powinna dzialac
 	public void UseSpecial()
@@ -68,23 +192,6 @@ public class Unit : MonoBehaviour
 		throw new NotImplementedException();
 	}
 	
-	//nie wiem jak implementowac tu pewnie maja leciec jakies efekty umierania najpierw a potem usuwanie ze sceny
-	public void Die()
-	{
-		throw new NotImplementedException();
-	}
-	
-	//nie wiem jak ma dzialac ta metoda, zakladam ze ma wyswietlac pole gdzie moze byc pokazany zasieg ataku
-	public void DisplayAttackDistance()
-	{
-		throw new NotImplementedException();
-	}
-	
-	//jako ze nie iwem jak wyswietlac to pole ataku to nie wiem w jaki sposob je ukrywac
-	public void StopDisplayingAttackDistance()
-	{
-		throw new NotImplementedException();
-	}
 	#endregion
 	
 	#region Coroutines
@@ -96,7 +203,7 @@ public class Unit : MonoBehaviour
 			yield return new WaitForSeconds(clip.length);
 		}
 		
-		target.GetDamadge((int)AttackValue, this);
+		target.GetDamadge(AttackStatistics.Power, this);
 		animation.CrossFade("none");
 		if (callback != null) callback();
 		isBusy = false;
