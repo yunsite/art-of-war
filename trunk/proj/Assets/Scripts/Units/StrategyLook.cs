@@ -22,6 +22,13 @@ public class StrategyLook : MonoBehaviour {
 			+ transform.right * Input.GetAxis("Horizontal");
 		transform.Translate(movement.normalized * motionSpeed, Space.World);
 		
+		Vector3 pos = transform.position;
+		float mouse_wheel = Input.GetAxis("Mouse ScrollWheel");
+		pos.y += mouse_wheel * 10;	
+		if(pos.y < Terrain.activeTerrain.SampleHeight(pos) + 5)
+			pos.y = Terrain.activeTerrain.SampleHeight(transform.position) + 5;
+		transform.position = pos;
+		
 		if (Input.GetButton("Fire2")) {
 			Vector3 euler = transform.localEulerAngles;
 			yaw = Mathf.Clamp(yaw + Input.GetAxis("Mouse Y") * rotationSpeed, minYaw, maxYaw);
