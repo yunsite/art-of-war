@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class UILogic : MonoBehaviour {
+public class UILogic : MonoBehaviour {
 
 	public virtual void Show () {
 		gameObject.SetActive(true);

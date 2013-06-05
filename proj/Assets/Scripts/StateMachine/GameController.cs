@@ -1,13 +1,12 @@
 using System;
 using UnityEngine;
 
-//nie ma na razie klasy GameState i pochodnych wiec rzucam same wyjatki poki co
 public class GameController : MonoBehaviour {
 	
-	public GameState CurrentGameState { get; set; }
+	public GameState CurrentGameState { get; private set; }
 	
 	void Start () {
-		CurrentGameState = new MainMenuState(this);
+		CurrentGameState = GameState.InitialState(this);
 	}
 	
 	public void GoToMainMenuState()
