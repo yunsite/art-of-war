@@ -1,5 +1,7 @@
 public class HelpUnitsUI : UILogic {
-
+	
+	public UnitModelSelector UnitModelListPrefab;
+	
 	public UILogic IfvTabPane;
 	public UILogic TankTabPane;
 	public UILogic HeavyTankTabPane;
