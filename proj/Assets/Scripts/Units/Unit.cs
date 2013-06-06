@@ -117,6 +117,7 @@ public class Unit : MonoBehaviour
 		public int TotalQuantity = 2;
 		public float Power = 5;
 		public float Range = 60;
+		public AttackAreaEnum Area;
 	}
 	
 	public UnitAttackStatistics AttackStatistics = new UnitAttackStatistics();
@@ -256,4 +257,16 @@ public class Unit : MonoBehaviour
 		isBusy = false;
 	}
 	#endregion
+}
+
+public enum UnitTypeEnum {
+	IFV, Tank, HeavyTank, Helicopter, Artillery
+}
+
+public enum DifficultTerrainMoveAbilityEnum {
+	Poor, Medium, Good
+}
+
+public enum AttackAreaEnum {
+	Unit, Field
 }
