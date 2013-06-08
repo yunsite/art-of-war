@@ -31,4 +31,8 @@ public class UnitModelCamera : MonoBehaviour {
 		this.index = index % targets.Count;
 		selectedTarget = targets[this.index];
 	}
+	
+	public Unit GetUnit () {
+		return selectedTarget.parent.GetComponentInChildren<Unit>();
+	}
 }

@@ -2,11 +2,11 @@ public class HelpUnitsUI : UILogic {
 	
 	public UnitModelSelector UnitModelListPrefab;
 	
-	public UILogic IfvTabPane;
-	public UILogic TankTabPane;
-	public UILogic HeavyTankTabPane;
-	public UILogic HelicopterTabPane;
-	public UILogic ArtilleryTabPane;
+	public HelpUnitDescriptionUI IfvTabPane;
+	public HelpUnitDescriptionUI TankTabPane;
+	public HelpUnitDescriptionUI HeavyTankTabPane;
+	public HelpUnitDescriptionUI HelicopterTabPane;
+	public HelpUnitDescriptionUI ArtilleryTabPane;
 	
 	public ButtonLogic PrevUnitButton;
 	public ButtonLogic NextUnitButton;
