@@ -108,12 +108,24 @@ public class HelpState : GameState {
 	private class UnitSelection {
 		private HelpUnitsUI ui;
 		private int index;
-		private List<UILogic> tabPanes;
+		private List<HelpUnitDescriptionUI> tabPanes;
 		private UnitModelSelector selector;
+		
+		// Alignment for ButtonsFont 42
+		private const string unitDescriptionFormat = 
+				"Health Points:                                    {0}" +
+				"\nDeffence:                                            {1}" +
+				"\nAttack Area:                                       {2}" +
+				"\nAttack Power:                                    {3}" +
+				"\nAttack Range:                                    {4}" +
+				"\nAttack Quantity:                                 {5}" +
+				"\nMovement Range:                              {6}" +
+				"\nDifficult Terrain Movement Ability:    {7}" +
+				"\nSpecial Ability: \n    {8}";
 		
 		public UnitSelection (HelpUnitsUI ui) {
 			this.ui = ui;
-			this.tabPanes = new List<UILogic> {
+			this.tabPanes = new List<HelpUnitDescriptionUI> {
 				ui.IfvTabPane,
 				ui.TankTabPane,
 				ui.HeavyTankTabPane,
@@ -128,16 +140,17 @@ public class HelpState : GameState {
 			if (index < 0) index = 0;
 			Select(index);
 			AttachEventHandlers();
-			ui.Show();
 			selector.Show();
 			selector.SelectModel(index);
+			ApplyUnitInfo();
+			ui.Show();
 		}
 		
 		public void Exit () {
-			selector.Hide();
 			ui.Hide();
+			selector.Hide();
 			DetachEventHandlers();
-			GameObject.Destroy(selector);
+			GameObject.Destroy(selector.gameObject);
 		}
 		
 		private int InferSelection () {
@@ -162,20 +175,70 @@ public class HelpState : GameState {
 		
 		private void Select(int index) {
 			if (this.index != index) {
-				tabPanes[this.index].gameObject.SetActive(false);
+				tabPanes[this.index].Hide();
 				this.index = index % tabPanes.Count;
-				tabPanes[this.index].gameObject.SetActive(true);
+				tabPanes[this.index].Show();
 			}
 		}
 		
 		private void NextItem () {
 			selector.NextModel();
 			Select(selector.GetModel());
+			ApplyUnitInfo();
 		}
 		
 		private void PrevItem () {
 			selector.PrevModel();
 			Select(selector.GetModel());
+			ApplyUnitInfo();
+		}
+		
+		private void ApplyUnitInfo () {
+			Unit unit = selector.GetUnit();
+			if (unit != null) {
+				string description = string.Format(
+					unitDescriptionFormat,
+					unit.HealthStatistics.TotalPoints,
+					unit.HealthStatistics.Deffence,
+					unit.AttackStatistics.Area,
+					unit.AttackStatistics.Power,
+					unit.AttackStatistics.Range,
+					unit.AttackStatistics.TotalQuantity,
+					unit.MovementStatistics.TotalRange,
+					unit.MovementStatistics.DifficultTerrainMoveAbility,
+					GetUnitSpecialAbilityDescription(unit.UnitType));
+				UILabel content = this.tabPanes[index].ContentLabel;
+				content.text = description;
+				content.MarkAsChanged();
+			} else {
+				Debug.LogWarning("No unit type information available.");
+			}
+		}
+
+		string GetUnitSpecialAbilityDescription (UnitTypeEnum unitType)
+		{
+			string result;
+			switch (unitType) {
+			case UnitTypeEnum.IFV:
+				result = "Gas - two times larger movement range in one turn.";
+				break;
+			case UnitTypeEnum.Tank:
+				result = "Break - special projectile damaging each vehicle on trajectory.";
+				break;
+			case UnitTypeEnum.HeavyTank:
+				result = "Fortification - Increases deffence to 200% for 2 turns taking all movement quantity.";
+				break;
+			case UnitTypeEnum.Helicopter:
+				result = "Valkiria - attacks 2 to 4 targets with power of 100% dvided between all of it.";
+				break;
+			case UnitTypeEnum.Artillery:
+				result = "Raid - each target inside attack range receives 50% regular damage.";
+				break;
+			default:
+				throw new InvalidProgramException("Unreacheable code.");
+			}
+			
+			return result;
 		}
 		
 		private void AttachEventHandlers () {

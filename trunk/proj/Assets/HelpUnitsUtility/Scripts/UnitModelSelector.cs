@@ -19,4 +19,8 @@ public class UnitModelSelector : UILogic {
 	public int GetModel () {
 		return modelCamera.index;
 	}
+	
+	public Unit GetUnit () {
+		return modelCamera.GetUnit();
+	}
 }
