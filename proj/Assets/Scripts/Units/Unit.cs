@@ -89,12 +89,12 @@ public class Unit : MonoBehaviour
 	
 	public UnitMovementStatistics MovementStatistics = new UnitMovementStatistics();
 	
-	public void MoveToPosition(Vector3 worldPosition, Action callback)
+	public void MoveToPosition(Vector3 worldPosition)
 	{
 		float distance = (worldPosition - selfTransform.position).magnitude;
 		if(!isBusy && CanMove(worldPosition)) {
 			MovementStatistics.RemainingRange -= distance;
-			StartCoroutine(Moving(worldPosition, callback));
+			StartCoroutine(Moving(worldPosition));
 		}
 	}
 	
@@ -122,13 +122,18 @@ public class Unit : MonoBehaviour
 	
 	public UnitAttackStatistics AttackStatistics = new UnitAttackStatistics();
 	
-	public void Attack(Unit enemy, Action callback)
+	public void Attack(Unit enemy)
 	{
 		if(!isBusy && CanAttack(enemy.transform.position)) {
 			--AttackStatistics.RemainingQuantity;
-			StartCoroutine(Attacking(enemy, callback));
+			StartCoroutine(Attacking(enemy));
 		}
 	}
+
+    public void Attack(Vector3 target)
+    {
+        throw new NotImplementedException();
+    }
 	
 	public bool CanAttack () {
 		return AttackStatistics.RemainingQuantity > 0;
@@ -182,6 +187,8 @@ public class Unit : MonoBehaviour
 			Clicked (this, new EventArgs());
 		}
 	}
+
+    public event EventHandler ActionCompleted;
 	
 	#endregion
 	
@@ -196,7 +203,7 @@ public class Unit : MonoBehaviour
 	#endregion
 	
 	#region Coroutines
-	IEnumerator Attacking (Unit target, Action callback) {
+	IEnumerator Attacking (Unit target) {
 		isBusy = true;
 		AnimationClip clip = animation.GetClip("fire");
 		if (clip != null) {
@@ -206,7 +213,7 @@ public class Unit : MonoBehaviour
 		
 		target.GetDamadge(AttackStatistics.Power, this);
 		animation.CrossFade("none");
-		if (callback != null) callback();
+        if (ActionCompleted != null) ActionCompleted(this, new EventArgs());
 		isBusy = false;
 	}
 	
@@ -230,7 +237,7 @@ public class Unit : MonoBehaviour
 		}
 	}
 	
-	IEnumerator Moving (Vector3 target, Action callback) {
+	IEnumerator Moving (Vector3 target) {
 		isBusy = true;
 		AnimationClip forward = animation.GetClip("forward");
 		AnimationClip turn;
@@ -253,7 +260,7 @@ public class Unit : MonoBehaviour
 		if (forward != null) animation.Play(forward.name);
 		yield return StartCoroutine(Move(lenth));
 		animation.CrossFade("none");
-		if (callback != null) callback();
+        if (ActionCompleted != null) ActionCompleted(this, new EventArgs());
 		isBusy = false;
 	}
 	#endregion
