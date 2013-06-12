@@ -71,10 +71,15 @@ public class SelectedState : TurnState
             case AttackAreaEnum.Unit:
                 return new UnitAttackSelectedState(ui, unit);
             case AttackAreaEnum.Field:
-                return new FieldAttackSelectedState(ui, unit);
+                return new FieldAttackSelectedState(ui, unit); 
             default:
                 throw new InvalidProgramException("Unreacheable code path.");
         }
     }
+	
+	public override TurnState SpecialActionSelected ()
+	{
+		return new SpecialActionSelectedState(ui, unit);
+	}
     #endregion
 }

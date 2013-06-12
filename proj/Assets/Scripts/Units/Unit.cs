@@ -161,14 +161,14 @@ public class Unit : MonoBehaviour
 	{
 		// Na razie podstawowa funkcjonalność.
 		HealthStatistics.RemainingPoints -= damage;
-		// if (HP <= 0) Die();
+		if (HealthStatistics.RemainingPoints <= 0) Die();
 		return HealthStatistics.RemainingPoints; // Co ma być wartością zwracana ?
 	}
 	
-	//nie wiem jak implementowac tu pewnie maja leciec jakies efekty umierania najpierw a potem usuwanie ze sceny
+	//nie wiem jak implementowac tu pewnie maja leciec jakies efekty umierania najpierw
 	public void Die()
 	{
-		throw new NotImplementedException();
+		Destroy(gameObject);
 	}
 	
 	#endregion
@@ -194,10 +194,16 @@ public class Unit : MonoBehaviour
 	
 	#region Public Methods
 	
-	//nie wiem jak powinna dzialac
-	public void UseSpecial()
+	public virtual void EndTour()
 	{
-		throw new NotImplementedException();
+		return;
+	}
+
+	//W trakcie implementacji
+	public virtual void UseSpecial()
+	{
+		return;
+		//throw new NotImplementedException();
 	}
 	
 	#endregion
