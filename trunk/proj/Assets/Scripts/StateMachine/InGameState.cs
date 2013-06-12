@@ -45,6 +45,7 @@ public class InGameState : GameState
         ui.EndTurnButton.ButtonClicked += EndTurnButtonClickedHandler;
         ui.AttackButton.ButtonClicked += AttackButtonClickedHandler;
         ui.MoveButton.ButtonClicked += MoveButtonClickedHandler;
+		ui.SpecialAbilityButton.ButtonClicked += SpecialAbilityButtonClickedHandler;
     }
 
     private void DetachUiEventHandlers()
@@ -52,6 +53,7 @@ public class InGameState : GameState
         ui.MoveButton.ButtonClicked -= MoveButtonClickedHandler;
         ui.AttackButton.ButtonClicked -= AttackButtonClickedHandler;
         ui.EndTurnButton.ButtonClicked -= EndTurnButtonClickedHandler;
+		ui.SpecialAbilityButton.ButtonClicked -= SpecialAbilityButtonClickedHandler;
     }
 
 	private void LevelLoadedHandler(object sender, EventArgs args)
@@ -97,7 +99,13 @@ public class InGameState : GameState
 	public void EndTurnButtonClickedHandler(object sender, EventArgs args)
 	{
         Debug.Log("End of tour button clicked");
-        throw new NotImplementedException();
+		var AllUnits = GameObject.FindObjectsOfType(typeof(Unit)) as Unit[];
+		foreach(var unit in AllUnits)
+		{
+			unit.EndTour();
+		}
+		return;
+        //throw new NotImplementedException();
 	}
 
     #region Turn state management
@@ -124,7 +132,7 @@ public class InGameState : GameState
 
     private void AttackButtonClickedHandler(object sender, EventArgs args)
     {
-        SwitchTurnState(turn.AttackActionSelected());
+        SwitchTurnState(turn.SpecialActionSelected());
     }
 
     private void SpecialAbilityButtonClickedHandler(object sender, EventArgs args)
