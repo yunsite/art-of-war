@@ -8,12 +8,19 @@ using UnityEngine;
 /// </summary>
 public class ReadyState : ActionsDisabledState
 {
-    public ReadyState(InGameUI ui) : base(ui) { }
+    public ReadyState(InGameUI ui, PlayerInfo player) : base(ui, player) { }
 
     #region Events
     public override TurnState UnitSelected(Unit unit)
     {
-        return new SelectedState(ui, unit);
+        if (unit.PlayerOwner == player.Index)
+        {
+            return new SelectedState(ui, player, unit);
+        }
+        else
+        {
+            return this;
+        }
     }
 
     public override TurnState TerrainPositionSelected(Vector3 position)

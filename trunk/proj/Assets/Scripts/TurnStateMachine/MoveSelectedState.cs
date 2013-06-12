@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class MoveSelectedState : SelectedState
 {
-    internal MoveSelectedState(InGameUI ui, Unit unit) : base(ui, unit) { }
+    internal MoveSelectedState(InGameUI ui, PlayerInfo player, Unit unit) : base(ui, player, unit) { }
 
     public override void Enter()
     {
@@ -21,7 +21,7 @@ public class MoveSelectedState : SelectedState
         if (unit.CanMove(position))
         {
             unit.MoveToPosition(position);
-            return new ActionExecutionState(ui, unit);
+            return new ActionExecutionState(ui, player, unit);
         }
         else
         {

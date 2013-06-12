@@ -12,6 +12,25 @@ public abstract class TurnState
 {
     private const string forbiddenEventErrorMessage = "Forbidden event in current turn state";
 
+    protected InGameUI ui;
+    protected PlayerInfo player;
+
+    protected TurnState(InGameUI ui, PlayerInfo player)
+    {
+        if (ui == null)
+        {
+            throw new ArgumentNullException("ui");
+        }
+
+        if (player == null)
+        {
+            throw new ArgumentNullException("player");
+        }
+
+        this.ui = ui;
+        this.player = player;
+    }
+
     /// <summary>
     /// State entry behaviour, called in case of in-transition occurrence.
     /// </summary>
