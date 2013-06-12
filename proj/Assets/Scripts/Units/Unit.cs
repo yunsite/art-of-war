@@ -108,6 +108,10 @@ public class Unit : MonoBehaviour
 		return CanMove() && MovementStatistics.RemainingRange >= distance;
 	}
 	
+	public void ResetMovementPoints() {
+		MovementStatistics.RemainingRange = MovementStatistics.TotalRange;
+	}
+	
 	#endregion
 	
 	#region Attack items
@@ -201,6 +205,7 @@ public class Unit : MonoBehaviour
 	
 	public virtual void EndTour()
 	{
+		ResetMovementPoints();
 		return;
 	}
 
@@ -222,10 +227,47 @@ public class Unit : MonoBehaviour
 			yield return new WaitForSeconds(clip.length);
 		}
 		
+		UnityEngine.Object ammo = Instantiate(Resources.Load("ammo"));
+		ammo.name = "ammo";
+		
+		GameObject obj = GameObject.Find("ammo");
+		
+		AnimationClip turn;
+		Vector3 direction = (Vector3) target.selfTransform.position - selfTransform.position;
+		direction.y = 0;
+		float lenth = direction.magnitude;
+		direction /= lenth;
+		float angle = Quaternion.FromToRotation(
+			selfTransform.forward,
+			direction).eulerAngles.y;
+		if (angle > 180) {
+			angle -= 360;
+			turn = animation.GetClip("turnLeft");
+		} else {
+			turn = animation.GetClip("turnRight");
+		}
+		
+		if (turn != null) animation.Play(turn.name);
+		yield return StartCoroutine(Turn(angle));
+		
+		yield return StartCoroutine(Shoot(obj.transform, selfTransform.position, target.transform.position, 2.0f));
+		Destroy(obj);
+		
 		target.GetDamadge(AttackStatistics.Power, this);
 		animation.CrossFade("none");
         if (ActionCompleted != null) ActionCompleted(this, new EventArgs());
 		isBusy = false;
+	}
+	
+	IEnumerator Shoot (Transform thisTransform, Vector3 startPos, Vector3 endPos, float time) {
+    	float i = 0.0f;
+    	float rate = 1.0f / time;
+    	while (i < 1.0f) {
+        	i += Time.deltaTime * rate;
+        	thisTransform.position = Vector3.Lerp(startPos, endPos, i);
+			Debug.Log(i);
+			yield return new WaitForFixedUpdate();
+    	}
 	}
 	
 	IEnumerator Move (float length) {
