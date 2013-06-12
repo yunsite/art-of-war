@@ -6,18 +6,7 @@ using System;
 /// </summary>
 public abstract class ActionsDisabledState : TurnState
 {
-
-    protected InGameUI ui;
-
-    protected ActionsDisabledState(InGameUI ui)
-    {
-        if (ui == null)
-        {
-            throw new ArgumentNullException("ui");
-        }
-
-        this.ui = ui;
-    }
+    protected ActionsDisabledState(InGameUI ui, PlayerInfo player) : base(ui, player) { }
 
     public override void Enter()
     {

@@ -11,12 +11,12 @@ public class ActionExecutionState : ActionsDisabledState
 {
     private Unit unit;
 
-    internal ActionExecutionState(InGameUI ui, Unit unit)
-        : base(ui)
+    internal ActionExecutionState(InGameUI ui, PlayerInfo player, Unit unit)
+        : base(ui, player)
     {
         if (unit == null)
         {
-            throw new ArgumentNullException("enemy");
+            throw new ArgumentNullException("unit");
         }
 
         this.unit = unit;
@@ -47,7 +47,7 @@ public class ActionExecutionState : ActionsDisabledState
 
     public override TurnState ActionCompleted()
     {
-        return new SelectedState(ui, unit);
+        return new SelectedState(ui, player, unit);
     }
     #endregion
 }

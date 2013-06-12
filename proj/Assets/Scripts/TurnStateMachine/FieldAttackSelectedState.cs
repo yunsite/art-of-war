@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class FieldAttackSelectedState : SelectedState
 {
-    internal FieldAttackSelectedState(InGameUI ui, Unit unit) : base(ui, unit) { }
+    internal FieldAttackSelectedState(InGameUI ui, PlayerInfo player, Unit unit) : base(ui, player, unit) { }
 
     public override void Enter()
     {
@@ -22,7 +22,7 @@ public class FieldAttackSelectedState : SelectedState
         {
             unit.Attack(position);
             Debug.Log("Atakuje jednostka zaznaczona: " + unit + " obszar o œrodku w: " + position);
-            return new ActionExecutionState(ui, unit);
+            return new ActionExecutionState(ui, player, unit);
         }
         else
         {

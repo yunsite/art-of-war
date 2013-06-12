@@ -9,22 +9,16 @@ using UnityEngine;
 /// </summary>
 public class SelectedState : TurnState
 {
-    protected InGameUI ui;
     protected Unit unit;
 
-    protected internal SelectedState(InGameUI ui, Unit unit)
+    protected internal SelectedState(InGameUI ui, PlayerInfo player, Unit unit)
+        : base(ui, player)
     {
-        if (ui == null)
-        {
-            throw new ArgumentNullException("ui");
-        }
-
         if (unit == null)
         {
             throw new ArgumentNullException("enemy");
         }
 
-        this.ui = ui;
         this.unit = unit;
     }
 
@@ -44,24 +38,24 @@ public class SelectedState : TurnState
     #region Events
     public override TurnState UnitSelected(Unit unit)
     {
-        if (unit == this.unit)
+        if (unit != this.unit && unit.PlayerOwner == player.Index)
         {
-            return this;
+            return new SelectedState(ui, player, unit);
         }
         else
         {
-            return new SelectedState(ui, unit);
+            return this;
         }
     }
 
     public override TurnState TerrainPositionSelected(Vector3 position)
     {
-        return new ReadyState(ui);
+        return new ReadyState(ui, player);
     }
 
     public override TurnState MoveActionSelected()
     {
-        return new MoveSelectedState(ui, unit);
+        return new MoveSelectedState(ui, player, unit);
     }
 
     public override TurnState AttackActionSelected()
@@ -69,9 +63,9 @@ public class SelectedState : TurnState
         switch (unit.AttackStatistics.Area)
         {
             case AttackAreaEnum.Unit:
-                return new UnitAttackSelectedState(ui, unit);
+                return new UnitAttackSelectedState(ui, player, unit);
             case AttackAreaEnum.Field:
-                return new FieldAttackSelectedState(ui, unit); 
+                return new FieldAttackSelectedState(ui, player, unit); 
             default:
                 throw new InvalidProgramException("Unreacheable code path.");
         }
@@ -79,7 +73,27 @@ public class SelectedState : TurnState
 	
 	public override TurnState SpecialActionSelected ()
 	{
-		return new SpecialActionSelectedState(ui, unit);
+        switch (unit.UnitType)
+        {
+            case UnitTypeEnum.IFV:
+                throw new NotImplementedException();
+            case UnitTypeEnum.Tank:
+                throw new NotImplementedException();
+            case UnitTypeEnum.HeavyTank:
+                // Niema potrzeby tworzyć osobnego stanu dla ciężkiego czołgu,
+                // bo jego umiejętność specjalna nie wymaga żadnych argumentów.
+                HeavyTank heayTank = (HeavyTank)unit;
+                heayTank.UseSpecial();
+                // Jeżeli umiejętność specjalna będzie uruchamiać animację trzeba przejść do stanu:
+                // return new ActionExecutionState(ui, player, unit);
+                return new ReadyState(ui, player);
+            case UnitTypeEnum.Helicopter:
+                throw new NotImplementedException();
+            case UnitTypeEnum.Artillery:
+                throw new NotImplementedException();
+            default:
+                throw new InvalidProgramException("Unreacheable code path.");
+        }
 	}
     #endregion
 }

@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 	
 	public GameUI GameUIInstance;
 	public GameController GameControllerInstance;
+    public MapManager MapManagerInstance;
 	public event EventHandler LevelLoadedEvent;
 	void Awake () {
 		// Obiekt do którego przyłączony jest GameManager powinien przetrwać przełądowanie sceny.
@@ -23,15 +24,16 @@ public class GameManager : MonoBehaviour
 		return (GameManager)FindObjectOfType(typeof(GameManager));
 	}
 
-	protected virtual void OnLevelLoadedEvent (EventArgs e)
-	{
-		var handler = LevelLoadedEvent;
-		if (handler != null)
-			handler (this, e);
-	}
+    protected virtual void OnLevelLoadedEvent(EventArgs e)
+    {
+        var handler = LevelLoadedEvent;
+        if (handler != null)
+            handler(this, e);
+    }
 
 	void OnLevelWasLoaded(int index)
 	{
+        MapManagerInstance = (MapManager)FindObjectOfType(typeof(MapManager));
 		OnLevelLoadedEvent (new EventArgs ());
 	}
 }

@@ -18,7 +18,8 @@ public class Unit : MonoBehaviour
 	public UnitTypeEnum UnitType;
 	
 	#region Selection items
-	
+
+    public int PlayerOwner;
 	public SelectionMarker Selector;
 	public RangeProjector RangeProjector;
 	
@@ -177,16 +178,20 @@ public class Unit : MonoBehaviour
 	public float rotationSpeed = 20;
 	
 	#region Events
-	
-	public event EventHandler Clicked;
-	void OnMouseUpAsButton () 
-	{
 
-		if (Clicked != null) 
-		{
-			Clicked (this, new EventArgs());
-		}
-	}
+    public event EventHandler Clicked;
+    protected void OnClicked(object sender, EventArgs e)
+    {
+        if (Clicked != null)
+        {
+            Clicked(sender, e);
+        }
+    }
+
+    void OnMouseUpAsButton()
+    {
+        OnClicked(this, new EventArgs());
+    }
 
     public event EventHandler ActionCompleted;
 	
