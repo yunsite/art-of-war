@@ -14,7 +14,7 @@ public class InGameState : GameState
     protected override void Enter()
     {
         base.Enter();
-        LoadLevelAsync("TurnsTestScene", LevelLoadedHandler);
+        LoadLevelAsync("MainGameScene", LevelLoadedHandler);
         GameManager manager = GameManager.Instance();
         ui = manager.GameUIInstance.InGameUIInstance;
         AttachUiEventHandlers();
