@@ -198,10 +198,15 @@ public class Unit : MonoBehaviour
     }
 
     public event EventHandler ActionCompleted;
-	
+	protected void OnActionCompleted()
+	{
+		if(ActionCompleted != null)
+			ActionCompleted(this, new EventArgs());
+	}
 	#endregion
 	
 	#region Public Methods
+	
 	
 	public virtual void EndTour()
 	{

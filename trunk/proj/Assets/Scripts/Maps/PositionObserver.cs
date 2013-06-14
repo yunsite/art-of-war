@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PositionObserver : MonoBehaviour {
 	
-	public float raycastDistance = 100;
+	public float raycastDistance = 1000;
 	public event EventHandler<PositionEventArgs> Clicked;
 
 	void OnMouseUpAsButton () {
