@@ -76,9 +76,11 @@ public class SelectedState : TurnState
         switch (unit.UnitType)
         {
             case UnitTypeEnum.IFV:
-                throw new NotImplementedException();
+                IFVUnit ifv = (IFVUnit)unit;
+				ifv.UseSpecial();
+				return new ReadyState(ui, player);
             case UnitTypeEnum.Tank:
-                throw new NotImplementedException();
+                return new TankSpecialAttackSelectedState(ui, player, unit); 
             case UnitTypeEnum.HeavyTank:
                 // Niema potrzeby tworzyć osobnego stanu dla ciężkiego czołgu,
                 // bo jego umiejętność specjalna nie wymaga żadnych argumentów.
