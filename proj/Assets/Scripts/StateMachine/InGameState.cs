@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InGameState : GameState
@@ -57,6 +56,7 @@ public class InGameState : GameState
         foreach (PlayerInfo player in mapManager.Players)
         {
             player.MainCamera.gameObject.SetActive(false);
+            player.MinimapCamera.gameObject.SetActive(false);
         }
     }
 
@@ -145,11 +145,13 @@ public class InGameState : GameState
         turn = new ReadyState(ui, player);
         turn.Enter();
         player.MainCamera.gameObject.SetActive(true);
+        player.MinimapCamera.gameObject.SetActive(true);
     }
 
     private void EndTurn()
     {
         PlayerInfo player = mapManager.Players[currentPlayer];
+        player.MinimapCamera.gameObject.SetActive(false);
         player.MainCamera.gameObject.SetActive(false);
         turn.Exit();
         foreach (Unit unit in player.Units)
