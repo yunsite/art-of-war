@@ -12,7 +12,6 @@ public class Unit : MonoBehaviour
 	
 	void Awake () {
 		selfTransform = transform;
-		rigidbody.isKinematic = true;
 	}
 	
 	public UnitTypeEnum UnitType;
@@ -25,7 +24,6 @@ public class Unit : MonoBehaviour
 	
 	public void Select () {
 		SelectionMode mode;
-		float range;
 		if (CanMove() || CanAttack()) {
 			mode = SelectionMode.Default;
 		} else {
@@ -59,6 +57,21 @@ public class Unit : MonoBehaviour
 		
 		SelectRange(mode, AttackStatistics.Range);
 	}
+
+    public void SelectSpecialAbility()
+    {
+        SelectionMode mode;
+        if (CanAttack())
+        {
+            mode = SelectionMode.SpecialAbility;
+        }
+        else
+        {
+            mode = SelectionMode.NoAction;
+        }
+
+        SelectRange(mode, AttackStatistics.Range);
+    }
 	
 	private void SelectRange(SelectionMode mode, float range) {
 		Selector.gameObject.SetActive(true);
@@ -297,6 +310,7 @@ public class Unit : MonoBehaviour
 	
 	IEnumerator Moving (Vector3 target) {
 		isBusy = true;
+        audio.Play();
 		AnimationClip forward = animation.GetClip("forward");
 		AnimationClip turn;
 		Vector3 direction = target - selfTransform.position;

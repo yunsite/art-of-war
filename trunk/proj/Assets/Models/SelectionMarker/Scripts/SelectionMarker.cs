@@ -45,7 +45,7 @@ public class SelectionMarker : MonoBehaviour {
 			return AttackColor;
 		case SelectionMode.Movement:
 			return MovementColor;
-		case SelectionMode.SpecialAttack:
+		case SelectionMode.SpecialAbility:
 			return SpecialAttackColor;
 		case SelectionMode.NoAction:
 			return NoActionColor;
@@ -59,4 +59,4 @@ public class SelectionMarker : MonoBehaviour {
 	}
 }
 
-public enum SelectionMode { Default, Movement, Attack, SpecialAttack, NoAction };
+public enum SelectionMode { Default, Movement, Attack, SpecialAbility, NoAction };
