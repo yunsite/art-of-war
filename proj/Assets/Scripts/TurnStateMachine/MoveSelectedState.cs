@@ -20,13 +20,30 @@ public class MoveSelectedState : SelectedState
     {
         if (unit.CanMove(position))
         {
-            unit.MoveToPosition(position);
-            return new ActionExecutionState(ui, player, unit);
+            if (IsTargetVisible(position))
+            {
+                unit.MoveToPosition(position);
+                return new ActionExecutionState(ui, player, unit);
+            }
+            else
+            {
+                return this;
+            }
         }
         else
         {
             return base.TerrainPositionSelected(position);
         }
+    }
+    #endregion
+
+    #region Helpers
+    private bool IsTargetVisible(Vector3 target)
+    {
+        BoxCollider collider = unit.GetComponent<BoxCollider>();
+        Vector3 position = unit.transform.position + collider.center;
+        Vector3 direction = target + Vector3.up - position;
+        return !Physics.Raycast(position, direction.normalized, direction.magnitude);
     }
     #endregion
 }

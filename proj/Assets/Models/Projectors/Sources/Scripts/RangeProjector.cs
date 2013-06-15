@@ -14,6 +14,7 @@ public class RangeProjector : MonoBehaviour {
 	void Awake () {
 		selfTransform = transform;
 		projector = GetComponent<Projector>();
+        projector.material = new Material(projector.material);
 	}
 	
 	void Start () {
