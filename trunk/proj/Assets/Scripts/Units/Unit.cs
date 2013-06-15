@@ -332,6 +332,7 @@ public class Unit : MonoBehaviour
 		if (forward != null) animation.Play(forward.name);
 		yield return StartCoroutine(Move(lenth));
 		animation.CrossFade("none");
+        audio.Stop();
         if (ActionCompleted != null) ActionCompleted(this, new EventArgs());
 		isBusy = false;
 	}
