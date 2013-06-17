@@ -13,7 +13,7 @@ public class TankSpecialAttackSelectedState : SelectedState
     public override void Enter()
     {
         base.Enter();
-        unit.SelectAttack();
+        unit.SelectSpecialAbility();
     }
 
     #region Events
