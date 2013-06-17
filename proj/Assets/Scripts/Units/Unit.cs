@@ -46,7 +46,6 @@ public class Unit : MonoBehaviour
 		
 		SelectRange(mode, range);
 	}
-	
 	public void SelectAttack () {
 		SelectionMode mode;
 		if (CanAttack()) {
@@ -58,8 +57,11 @@ public class Unit : MonoBehaviour
 		SelectRange(mode, AttackStatistics.Range);
 	}
 
-    public void SelectSpecialAbility()
+    public virtual void SelectSpecialAbility()
     {
+		/*
+		 * Nie bardzo rozumiem tą implementację więc ją zakomentowywuję
+		 * zmieniam metode na virtualną (Marek Kokot) (dot. issue 0056)
         SelectionMode mode;
         if (CanAttack())
         {
@@ -71,9 +73,10 @@ public class Unit : MonoBehaviour
         }
 
         SelectRange(mode, AttackStatistics.Range);
+        */
     }
 	
-	private void SelectRange(SelectionMode mode, float range) {
+	protected void SelectRange(SelectionMode mode, float range) {
 		Selector.gameObject.SetActive(true);
 		Selector.SetMode(mode);
 		if (range > 0) {
