@@ -90,7 +90,7 @@ public class SelectedState : TurnState
                 // return new ActionExecutionState(ui, player, unit);
                 return new ReadyState(ui, player);
             case UnitTypeEnum.Helicopter:
-                throw new NotImplementedException();
+                return new HelicopterSpecialAttackSelectedState(ui, player, unit);
             case UnitTypeEnum.Artillery:
                 return new ArtillerySpecialAttackSelectedState(ui, player, unit);
             default:
