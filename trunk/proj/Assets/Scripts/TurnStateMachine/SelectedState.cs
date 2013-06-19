@@ -92,7 +92,7 @@ public class SelectedState : TurnState
             case UnitTypeEnum.Helicopter:
                 throw new NotImplementedException();
             case UnitTypeEnum.Artillery:
-                throw new NotImplementedException();
+                return new ArtillerySpecialAttackSelectedState(ui, player, unit);
             default:
                 throw new InvalidProgramException("Unreacheable code path.");
         }
