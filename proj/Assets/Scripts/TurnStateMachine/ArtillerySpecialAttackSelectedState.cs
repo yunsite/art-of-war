@@ -12,7 +12,7 @@ public class ArtillerySpecialAttackSelectedState : SelectedState
 	
     public override void Enter()
     {
-        base.Enter();
+        //base.Enter();
         unit.SelectSpecialAbility();
     }
 

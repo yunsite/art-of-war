@@ -56,7 +56,12 @@ public class Unit : MonoBehaviour
 		
 		SelectRange(mode, AttackStatistics.Range);
 	}
-
+	
+	public void SelectAsTargetForHelicopterSpecial()
+	{
+		SelectRange(SelectionMode.TargetForHelicopter, 0.0f);
+	}
+	
     public virtual void SelectSpecialAbility()
     {
 		/*
@@ -77,6 +82,7 @@ public class Unit : MonoBehaviour
     }
 	
 	protected void SelectRange(SelectionMode mode, float range) {
+		
 		Selector.gameObject.SetActive(true);
 		Selector.SetMode(mode);
 		if (range > 0) {

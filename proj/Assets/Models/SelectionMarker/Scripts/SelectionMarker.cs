@@ -3,12 +3,15 @@ using UnityEngine;
 
 public class SelectionMarker : MonoBehaviour {
 	
-	public SelectionMode Mode;
+	//public SelectionMode Mode; ta zmienna byla tylko wykozystywana w metodzie start a nie bylo jej nic przypisywane
+	//wiec dostawala wartosc domyslna, a wydaje mi sie ze koncepcja jest taka aby metoda SetMode byla wywolywana z zewnatrz,
+	//dlatego usuwam w Start() jej wywolanie i usuwam ta zmianna (Marek Kokot)
 	public Color DefaultColor = new Color(35f / 255f, 106f / 255f, 251f / 255f, 1f);
 	public Color MovementColor = Color.green;
 	public Color AttackColor = Color.red;
 	public Color SpecialAttackColor = Color.yellow;
 	public Color NoActionColor = Color.gray;
+	public Color TargetForHelicopterColor = Color.white;
 	public string MeshName = "markerMesh";
 	
 	private Material material;
@@ -34,7 +37,7 @@ public class SelectionMarker : MonoBehaviour {
 	}
 	
 	void Start () {
-		SetMode(Mode);
+		//SetMode(Mode);
 	}
 	
 	public Color GetModeColor (SelectionMode mode) {
@@ -49,6 +52,8 @@ public class SelectionMarker : MonoBehaviour {
 			return SpecialAttackColor;
 		case SelectionMode.NoAction:
 			return NoActionColor;
+		case SelectionMode.TargetForHelicopter:
+			return TargetForHelicopterColor;
 		default:
 			throw new InvalidProgramException("Invalid program path reached.");
 		}
@@ -59,4 +64,4 @@ public class SelectionMarker : MonoBehaviour {
 	}
 }
 
-public enum SelectionMode { Default, Movement, Attack, SpecialAbility, NoAction };
+public enum SelectionMode { Default, Movement, Attack, SpecialAbility, NoAction, TargetForHelicopter };
