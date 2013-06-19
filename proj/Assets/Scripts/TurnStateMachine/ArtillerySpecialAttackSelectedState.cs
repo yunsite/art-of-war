@@ -20,7 +20,7 @@ public class ArtillerySpecialAttackSelectedState : SelectedState
 	public override TurnState TerrainPositionSelected (Vector3 position)
 	{
 		artillery.UseSpecial(position);
-		return new ActionExecutionState(ui, player, unit);
+		return new SelectedState(ui, player, unit);
 	}
     public override TurnState UnitSelected(Unit enemy)
     {	
@@ -29,7 +29,7 @@ public class ArtillerySpecialAttackSelectedState : SelectedState
             return base.UnitSelected(enemy);
         }
 		artillery.UseSpecial(enemy.transform.position);
-        return new ActionExecutionState(ui, player, unit);
+        return new SelectedState(ui, player, unit);
     }
     #endregion
 }
