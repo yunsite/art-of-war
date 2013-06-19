@@ -20,7 +20,7 @@ public class TankSpecialAttackSelectedState : SelectedState
 	public override TurnState TerrainPositionSelected (Vector3 position)
 	{
 		tank.UseSpecial(position);
-		return new ActionExecutionState(ui, player, unit);
+		return new SelectedState(ui, player, unit);
 	}
     public override TurnState UnitSelected(Unit enemy)
     {	
@@ -29,8 +29,9 @@ public class TankSpecialAttackSelectedState : SelectedState
             return base.UnitSelected(enemy);
         }
 		tank.UseSpecial(enemy.transform.position);
-        return new ActionExecutionState(ui, player, unit);
+		return new SelectedState(ui, player, unit);
     }
+	
     #endregion
 }
 

@@ -52,9 +52,9 @@ public class Tank : Unit
 			}
 			canUse = false;
 		}
-		Deselect();
+		//Deselect();
 		//SelectRange(SelectionMode.NoAction, 0.0f);
-		OnActionCompleted();
+		//OnActionCompleted();
     }   
 	public override void EndTour ()
 	{
