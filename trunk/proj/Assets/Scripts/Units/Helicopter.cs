@@ -10,8 +10,14 @@ public class Helicopter : Unit
         if (!isBusy && CanMove(worldPosition))
         {
             MovementStatistics.RemainingRange -= distance;
-            StartCoroutine(Motion(worldPosition));
+            StartCoroutine(ProcessMotion(worldPosition));
         }
+    }
+
+    public override void Attack(Unit enemy)
+    {
+        // Jeszcze nie gotowe
+        throw new System.NotImplementedException();
     }
 
 	private bool canUse = true;
@@ -46,20 +52,22 @@ public class Helicopter : Unit
 			SelectRange(SelectionMode.NoAction, 0.0f);
 	}
 
-    IEnumerator Motion(Vector3 target)
+    IEnumerator ProcessMotion(Vector3 target)
     {
         Vector3 offset = target - transform.position;
         offset.y = 0;
         Vector3 direction = offset.normalized;
         float distance = offset.magnitude;
         audio.Play();
-        while (distance > targetRadius)
+        while (distance > MovementStatistics.TargetRadius)
         {
             Vector3 cross = Vector3.Cross(transform.forward, direction);
             if (Vector3.Dot(transform.forward, direction) < 0) cross.Normalize();
-            rigidbody.angularVelocity = cross * rotationSpeed * Mathf.Min(distance / targetRadius, 1);
-            rigidbody.velocity = transform.forward * Mathf.Min(distance * targetRadius, motionSpeed);
-            audio.volume = rigidbody.velocity.magnitude / motionSpeed;
+            rigidbody.angularVelocity =
+                cross * MovementStatistics.RotationSpeed * Mathf.Min(distance / MovementStatistics.TargetRadius, 1);
+            rigidbody.velocity =
+                transform.forward * Mathf.Min(distance * MovementStatistics.TargetRadius, MovementStatistics.MotionSpeed);
+            audio.volume = rigidbody.velocity.magnitude / MovementStatistics.MotionSpeed;
             yield return new WaitForFixedUpdate();
             offset = target - transform.position;
             offset.y = 0;

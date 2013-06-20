@@ -108,6 +108,9 @@ public class Unit : MonoBehaviour
 		public float RemainingRange = 40;
 		public float TotalRange = 40;
 		public DifficultTerrainMoveAbilityEnum DifficultTerrainMoveAbility;
+        public float TargetRadius = 2f;
+        public float MotionSpeed = 5f;
+        public float RotationSpeed = 5f;
 	}
 	
 	public UnitMovementStatistics MovementStatistics = new UnitMovementStatistics();
@@ -117,12 +120,12 @@ public class Unit : MonoBehaviour
 		float distance = (worldPosition - selfTransform.position).magnitude;
 		if(!isBusy && CanMove(worldPosition)) {
 			MovementStatistics.RemainingRange -= distance;
-			StartCoroutine(Motion(worldPosition));
+			StartCoroutine(ProcessMotion(worldPosition));
 		}
 	}
 	
 	public bool CanMove () {
-		return MovementStatistics.RemainingRange > targetRadius;
+		return MovementStatistics.RemainingRange > MovementStatistics.TargetRadius;
 	}
 	
 	public bool CanMove (Vector3 targetPosition) {
@@ -133,6 +136,35 @@ public class Unit : MonoBehaviour
 	public void ResetMovementPoints() {
 		MovementStatistics.RemainingRange = MovementStatistics.TotalRange;
 	}
+
+    IEnumerator ProcessMotion(Vector3 target)
+    {
+        Vector3 offset = target - transform.position;
+        offset.y = 0;
+        Vector3 direction = offset.normalized;
+        float distance = offset.magnitude;
+        audio.Play();
+        animation.CrossFade("forward");
+        while (distance > MovementStatistics.TargetRadius)
+        {
+            Vector3 cross = Vector3.Cross(transform.forward, direction);
+            if (Vector3.Dot(transform.forward, direction) < 0) cross.Normalize();
+            rigidbody.angularVelocity =
+                cross * MovementStatistics.RotationSpeed * Mathf.Min(distance / MovementStatistics.TargetRadius, 1);
+            rigidbody.velocity =
+                transform.forward * Mathf.Min(distance * MovementStatistics.TargetRadius, MovementStatistics.MotionSpeed);
+            audio.volume = rigidbody.velocity.magnitude / MovementStatistics.MotionSpeed;
+            yield return new WaitForFixedUpdate();
+            offset = target - transform.position;
+            offset.y = 0;
+            direction = offset.normalized;
+            distance = offset.magnitude;
+        }
+
+        animation.CrossFade("none");
+        audio.Stop();
+        OnActionCompleted();
+    }
 	
 	#endregion
 	
@@ -145,21 +177,27 @@ public class Unit : MonoBehaviour
 		public float Power = 5;
 		public float Range = 60;
 		public AttackAreaEnum Area;
+        public ProjectileController ProjectilePrefab;
+        public Transform Turrent;
+        public Transform Cannon;
+        public Transform CannonTip;
+        public float AimSpeed = 5f;
+        public float ProjectileSpeed = 100f;
 	}
 	
 	public UnitAttackStatistics AttackStatistics = new UnitAttackStatistics();
 	
-	public void Attack(Unit enemy)
+	public virtual void Attack(Unit enemy)
 	{
 		if(!isBusy && CanAttack(enemy.transform.position)) {
 			--AttackStatistics.RemainingQuantity;
-			StartCoroutine(Attacking(enemy));
+            StartCoroutine(ProcessAttack(enemy));
 		}
 	}
 
     public void Attack(Vector3 target)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException();
     }
 	
 	public bool CanAttack () {
@@ -170,6 +208,82 @@ public class Unit : MonoBehaviour
 		float distance = (targetPosition - selfTransform.position).magnitude;
 		return CanAttack() && distance <= AttackStatistics.Range;
 	}
+
+    IEnumerator ProcessAttack(Unit enemy)
+    {
+        Vector3 target = enemy.transform.position;
+        Quaternion turretBackup = AttackStatistics.Turrent.rotation;
+        yield return StartCoroutine(AimTurret(target));
+        Quaternion cannonBackup = AttackStatistics.Cannon.rotation;
+        yield return StartCoroutine(AimCannon(target));
+        bool gravity = rigidbody.useGravity;
+        rigidbody.useGravity = false;
+        collider.isTrigger = true;
+        EmitProjectile();
+        yield return StartCoroutine(BackupCannon(cannonBackup));
+        yield return StartCoroutine(BackupTurret(turretBackup));
+        collider.isTrigger = false;
+        rigidbody.useGravity = gravity;
+        OnActionCompleted();
+    }
+
+    IEnumerator AimTurret(Vector3 target)
+    {
+        Vector3 turretDirection = target - transform.position;
+        turretDirection.y = 0;
+        turretDirection.Normalize();
+
+        Quaternion turretRotation = Quaternion.LookRotation(
+            AttackStatistics.Turrent.forward, Vector3.Cross(turretDirection, AttackStatistics.Turrent.forward));
+        while (Quaternion.Dot(AttackStatistics.Turrent.rotation, turretRotation) < 1f)
+        {
+            AttackStatistics.Turrent.rotation = Quaternion.Slerp(
+                AttackStatistics.Turrent.rotation, turretRotation, Time.deltaTime * AttackStatistics.AimSpeed);
+            yield return null;
+        }
+    }
+
+    IEnumerator AimCannon(Vector3 target)
+    {
+        Vector3 direction = (target - transform.position).normalized;
+        Quaternion cannonRotation = Quaternion.LookRotation(
+            Vector3.Cross(-direction, AttackStatistics.Cannon.up), AttackStatistics.Cannon.up);
+        while (Quaternion.Dot(AttackStatistics.Cannon.rotation, cannonRotation) < 1f)
+        {
+            AttackStatistics.Cannon.rotation = Quaternion.Slerp(
+                AttackStatistics.Cannon.rotation, cannonRotation, Time.deltaTime * AttackStatistics.AimSpeed);
+            yield return null;
+        }
+    }
+
+    void EmitProjectile()
+    {
+        ProjectileController projectile = (ProjectileController)Instantiate(
+            AttackStatistics.ProjectilePrefab, AttackStatistics.CannonTip.position, AttackStatistics.CannonTip.rotation);
+        projectile.rigidbody.velocity = AttackStatistics.CannonTip.forward * AttackStatistics.ProjectileSpeed;
+        projectile.damage = AttackStatistics.Power;
+        projectile.attacker = this;
+    }
+
+    IEnumerator BackupCannon(Quaternion cannonBackup)
+    {
+        while (Quaternion.Dot(AttackStatistics.Cannon.rotation, cannonBackup) < 1f)
+        {
+            AttackStatistics.Cannon.rotation = Quaternion.Slerp(
+                AttackStatistics.Cannon.rotation, cannonBackup, Time.deltaTime * AttackStatistics.AimSpeed);
+            yield return null;
+        }
+    }
+
+    IEnumerator BackupTurret(Quaternion turretBackup)
+    {
+        while (Quaternion.Dot(AttackStatistics.Turrent.rotation, turretBackup) < 1f)
+        {
+            AttackStatistics.Turrent.rotation = Quaternion.Slerp(
+                AttackStatistics.Turrent.rotation, turretBackup, Time.deltaTime * AttackStatistics.AimSpeed);
+            yield return null;
+        }
+    }
 	
 	#endregion
 	
@@ -199,10 +313,6 @@ public class Unit : MonoBehaviour
 	}
 	
 	#endregion
-
-    public float targetRadius = 2f;
-	public float motionSpeed = 5f;
-	public float rotationSpeed = 5f;
 	
 	#region Events
 
@@ -242,97 +352,6 @@ public class Unit : MonoBehaviour
 	{
 		return;
 		//throw new NotImplementedException();
-	}
-	
-	#endregion
-	
-	#region Coroutines
-	IEnumerator Attacking (Unit target) {
-		isBusy = true;
-		AnimationClip clip = animation.GetClip("fire");
-		if (clip != null) {
-			animation.Play(clip.name);
-			yield return new WaitForSeconds(clip.length);
-		}
-		
-		UnityEngine.Object ammo = Instantiate(Resources.Load("ammo"));
-		ammo.name = "ammo";
-		
-		GameObject obj = GameObject.Find("ammo");
-		
-		AnimationClip turn;
-		Vector3 direction = (Vector3) target.selfTransform.position - selfTransform.position;
-		direction.y = 0;
-		float lenth = direction.magnitude;
-		direction /= lenth;
-		float angle = Quaternion.FromToRotation(
-			selfTransform.forward,
-			direction).eulerAngles.y;
-		if (angle > 180) {
-			angle -= 360;
-			turn = animation.GetClip("turnLeft");
-		} else {
-			turn = animation.GetClip("turnRight");
-		}
-		
-		if (turn != null) animation.Play(turn.name);
-		yield return StartCoroutine(Turn(angle));
-		
-		yield return StartCoroutine(Shoot(obj.transform, selfTransform.position, target.transform.position, 2.0f));
-		Destroy(obj);
-		
-		target.GetDamadge(AttackStatistics.Power, this);
-		animation.CrossFade("none");
-        if (ActionCompleted != null) ActionCompleted(this, new EventArgs());
-		isBusy = false;
-	}
-	
-	IEnumerator Shoot (Transform thisTransform, Vector3 startPos, Vector3 endPos, float time) {
-    	float i = 0.0f;
-    	float rate = 1.0f / time;
-    	while (i < 1.0f) {
-        	i += Time.deltaTime * rate;
-        	thisTransform.position = Vector3.Lerp(startPos, endPos, i);
-			yield return new WaitForFixedUpdate();
-    	}
-	}
-
-    IEnumerator Motion(Vector3 target)
-    {
-        Vector3 offset = target - transform.position;
-        offset.y = 0;
-        Vector3 direction = offset.normalized;
-        float distance = offset.magnitude;
-        audio.Play();
-        animation.CrossFade("forward");
-        while (distance > targetRadius)
-        {
-            Vector3 cross = Vector3.Cross(transform.forward, direction);
-            if (Vector3.Dot(transform.forward, direction) < 0) cross.Normalize();
-            rigidbody.angularVelocity = cross * rotationSpeed * Mathf.Min(distance / targetRadius, 1);
-            rigidbody.velocity = transform.forward * Mathf.Min(distance * targetRadius, motionSpeed);
-            audio.volume = rigidbody.velocity.magnitude / motionSpeed;
-            yield return new WaitForFixedUpdate();
-            offset = target - transform.position;
-            offset.y = 0;
-            direction = offset.normalized;
-            distance = offset.magnitude;
-        }
-
-        animation.CrossFade("none");
-        audio.Stop();
-        OnActionCompleted();
-    }
-	
-	IEnumerator Turn (float angle) {
-		float sign = Mathf.Sign(angle);
-		angle *= sign;
-		while (angle > 0) {
-			float deltaAngle = Mathf.Min(angle, rotationSpeed * Time.fixedDeltaTime);
-			selfTransform.Rotate(0, sign * Mathf.Min(angle, rotationSpeed * Time.fixedDeltaTime), 0, Space.World);
-			angle -= deltaAngle;
-			yield return new WaitForFixedUpdate();
-		}
 	}
 	
 	#endregion
