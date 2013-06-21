@@ -4,10 +4,10 @@ using UnityEngine;
 public class MainMenuState : GameState {
 	
 	private MainMenuUI ui;
-	
+
 	public MainMenuState(GameController controller) : base (controller) { }
-	
-	protected override void Enter ()
+
+    public override void Enter()
 	{
 		base.Enter ();
 		GameManager manager = GameManager.Instance();
@@ -16,7 +16,7 @@ public class MainMenuState : GameState {
 		ui.Show();
 	}
 	
-	protected override void Exit ()
+	public override void Exit ()
 	{
 		ui.Hide();
 		DetachEventHandlers();
@@ -54,6 +54,7 @@ public class MainMenuState : GameState {
 	
 	private void ExitButtonClickedHandler(object sender, EventArgs args) {
 		Debug.Log("Exit button clicked");
+        Application.Quit();
 	}
 	#endregion
 }

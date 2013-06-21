@@ -9,28 +9,33 @@ using System;
 public abstract class GameState
 {
 	protected GameController parent;
+    
+    public virtual string LevelName
+    {
+        get { return string.Empty; }
+    }
+    public virtual bool IsLevelAdditive
+    {
+        get { return false; }
+    }
 	
 	protected GameState(GameController parent) {
 		if (parent == null) throw new ArgumentNullException("parent");
 		this.parent = parent;
 	}
-	
-	public static GameState InitialState (GameController controller) {
-		GameState result = ResolveState(GameStateEnum.MainMenu, controller);
-		result.Enter();
-		return result;
-	}
+
+    public static GameState InitialState(GameController controller)
+    {
+        return ResolveState(GameStateEnum.MainMenu, controller);
+    }
 	
 	public GameState SwitchState(GameStateEnum nextState)
 	{
-		this.Exit();
-		GameState result = ResolveState(nextState, parent);
-		result.Enter();
-		return result;
+		return ResolveState(nextState, parent);
 	}
 	
-	protected virtual void Enter () { }
-	protected virtual void Exit () { }
+	public virtual void Enter () { }
+    public virtual void Exit() { }
 	
 	private static GameState ResolveState(GameStateEnum state, GameController controller) {
 		GameState result;

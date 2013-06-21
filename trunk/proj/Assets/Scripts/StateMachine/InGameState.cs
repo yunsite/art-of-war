@@ -9,47 +9,37 @@ public class InGameState : GameState
     private MapManager mapManager;
     private TurnState turn;
 
+    public override string LevelName
+    {
+        get { return "MainGameScene"; }
+    }
+
     public InGameState(GameController controller) : base(controller) { }
 
-    protected override void Enter()
+    public override void Enter()
     {
         base.Enter();
-        LoadLevelAsync("MainGameScene", LevelLoadedHandler);
         GameManager manager = GameManager.Instance();
         ui = manager.GameUIInstance.InGameUIInstance;
+        LookupMapManager();
         AttachUiEventHandlers();
-        ui.Show();
-    }
-
-    protected override void Exit()
-    {
-        ui.Hide();
-        turn.Exit();
-        turn = null;
-        DetachMapEventHandlers();
-        DetachUiEventHandlers();
-        base.Exit();
-    }
-
-    private void LoadLevelAsync(string levelName, EventHandler callback)
-    {
-        GameManager manager = GameManager.Instance();
-        if (Application.loadedLevelName != levelName)
-        {
-            manager.LevelLoadedEvent += callback;
-            Application.LoadLevel(levelName);
-        }
-    }
-
-    private void LevelLoadedHandler(object sender, EventArgs args)
-    {
-        GameManager manager = GameManager.Instance();
-        mapManager = manager.MapManagerInstance;
         PrepareCameras();
         AttachMapEventHandlers();
         currentPlayer = 0;
         BeginTurn();
-        manager.LevelLoadedEvent -= LevelLoadedHandler;
+        ui.Show();
+    }
+
+    public override void Exit()
+    {
+        ui.Hide();
+        turn.Exit();
+        turn = null;
+        HideInGameMenu();
+        DetachMapEventHandlers();
+        DetachUiEventHandlers();
+        base.Exit();
+        DestroyManager();
     }
 
     private void PrepareCameras()
@@ -59,6 +49,16 @@ public class InGameState : GameState
             player.MainCamera.gameObject.SetActive(false);
             player.MinimapCamera.gameObject.SetActive(false);
         }
+    }
+
+    private void LookupMapManager()
+    {
+        mapManager = (MapManager)GameObject.FindObjectOfType(typeof(MapManager));
+    }
+
+    private void DestroyManager()
+    {
+        GameObject.Destroy(mapManager.gameObject);
     }
 
     #region Event handlers
@@ -133,57 +133,59 @@ public class InGameState : GameState
     {
         if (menuUi == null)
         {
-            menuUi = ui.InGameMenuUIInstance;
-            DetachMapEventHandlers();
-            DetachUiEventHandlers();
-            AttachMenuUiEventHandlers();
             ShowInGameMenu();
         }
         else
         {
             HideInGameMenu();
-            DetachMenuUiEventHandlers();
-            AttachUiEventHandlers();
-            AttachMapEventHandlers();
-            menuUi = null;
         }
     }
 
     private void ShowInGameMenu()
     {
+        menuUi = ui.InGameMenuUIInstance;
+        DetachMapEventHandlers();
+        DetachUiEventHandlers();
+        AttachMenuUiEventHandlers();
         ui.InGameMenuUIInstance.Show();
     }
 
     private void HideInGameMenu()
     {
         ui.InGameMenuUIInstance.Hide();
+        DetachMenuUiEventHandlers();
+        AttachUiEventHandlers();
+        AttachMapEventHandlers();
+        menuUi = null;
     }
 
     private void ResumeButtonClickedHandler(object sender, EventArgs e)
     {
+        Debug.Log("Resume button clicked");
         OnEscape();
     }
 
     private void RestartButtonClickedHandler(object sender, EventArgs e)
     {
-        //parent.GoToInGameState();
-        throw new NotImplementedException();
+        Debug.Log("Restart button clicked");
+        parent.GoToInGameState();
     }
 
     private void MainMenuButtonClickedHandler(object sender, EventArgs e)
     {
-        //parent.GoToMainMenuState();
-        throw new NotImplementedException();
+        Debug.Log("Main menu button clicked");
+        parent.GoToMainMenuState();
     }
 
     private void HelpButtonClickedHandler(object sender, EventArgs e)
     {
-        //parent.GoToHelpState();
-        throw new NotImplementedException();
+        Debug.Log("Help button clicked");
+        parent.GoToHelpState();
     }
 
     private void QuitButtonClickedHandler(object sender, EventArgs e)
     {
+        Debug.Log("Quit button clicked");
         Application.Quit();
     }
     #endregion
