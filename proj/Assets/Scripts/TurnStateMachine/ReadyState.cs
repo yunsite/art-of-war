@@ -12,6 +12,7 @@ public class ReadyState : ActionsDisabledState
 
     public override void Enter()
     {
+        base.Enter();
         ResetStats();
     }
 

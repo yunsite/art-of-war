@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -22,8 +22,9 @@ public class Artillery : Unit
 			canUse = false;
 		}
     }   
-	public override void EndTour ()
+	public override void EndTurn ()
 	{
+        base.EndTurn();
 		canUse = true;
 	}
 	public override void SelectSpecialAbility ()

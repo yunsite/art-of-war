@@ -22,6 +22,8 @@ public class Unit : MonoBehaviour
     public int PlayerOwner;
     public SelectionMarker Selector;
     public RangeProjector RangeProjector;
+    public GameObject ownerIcon;
+    public GameObject enemyIcon;
 
     public void Select()
     {
@@ -115,6 +117,20 @@ public class Unit : MonoBehaviour
     {
         Selector.gameObject.SetActive(false);
         RangeProjector.gameObject.SetActive(false);
+    }
+
+    private void SwitchToOwnerIcon()
+    {
+        Debug.Log(this + " owner");
+        enemyIcon.SetActive(false);
+        ownerIcon.SetActive(true);
+    }
+
+    private void SwitchToEnemyIcon()
+    {
+        Debug.Log(this + " enemy");
+        ownerIcon.SetActive(false);
+        enemyIcon.SetActive(true);
     }
 
     #endregion
@@ -373,18 +389,20 @@ public class Unit : MonoBehaviour
 
     #region Public Methods
 
-
-    public virtual void EndTour()
+    public virtual void BeginTurn()
     {
-        ResetMovementPoints();
-        return;
+        SwitchToOwnerIcon();
     }
 
-    //W trakcie implementacji
+    public virtual void EndTurn()
+    {
+        SwitchToEnemyIcon();
+        ResetMovementPoints();
+    }
+    
     public virtual void UseSpecial()
     {
-        return;
-        //throw new NotImplementedException();
+        throw new NotSupportedException();
     }
 
     #endregion
