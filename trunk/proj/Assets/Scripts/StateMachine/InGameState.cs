@@ -5,6 +5,7 @@ public class InGameState : GameState
 {
     private int currentPlayer; // 0 - Player1; 1 - Plyer2;
 	private InGameUI ui;
+    private InGameMenuUI menuUi;
     private MapManager mapManager;
     private TurnState turn;
 
@@ -103,17 +104,89 @@ public class InGameState : GameState
 
         mapManager.Observer.Clicked -= TerrainClickedHandler;
     }
+
+    private void AttachMenuUiEventHandlers()
+    {
+        InGameMenuUI menuUi = ui.InGameMenuUIInstance;
+        menuUi.ResumeButton.ButtonClicked += ResumeButtonClickedHandler;
+        menuUi.RestartButton.ButtonClicked += RestartButtonClickedHandler;
+        menuUi.MainMenuButton.ButtonClicked += MainMenuButtonClickedHandler;
+        menuUi.HelpButton.ButtonClicked += HelpButtonClickedHandler;
+        menuUi.QuitButton.ButtonClicked += QuitButtonClickedHandler;
+    }
+
+    private void DetachMenuUiEventHandlers()
+    {
+        InGameMenuUI menuUi = ui.InGameMenuUIInstance;
+        menuUi.QuitButton.ButtonClicked -= QuitButtonClickedHandler;
+        menuUi.HelpButton.ButtonClicked -= HelpButtonClickedHandler;
+        menuUi.MainMenuButton.ButtonClicked -= MainMenuButtonClickedHandler;
+        menuUi.RestartButton.ButtonClicked -= RestartButtonClickedHandler;
+        menuUi.ResumeButton.ButtonClicked -= ResumeButtonClickedHandler;
+    }
+
     #endregion
 
-	private void ShowInGameMenu()
-	{
-		ui.Show();
-	}
-	
-	private void HideInGameMenu()
-	{
-		ui.Hide();
-	}
+    #region Menu items
+
+    public override void OnEscape()
+    {
+        if (menuUi == null)
+        {
+            menuUi = ui.InGameMenuUIInstance;
+            DetachMapEventHandlers();
+            DetachUiEventHandlers();
+            AttachMenuUiEventHandlers();
+            ShowInGameMenu();
+        }
+        else
+        {
+            HideInGameMenu();
+            DetachMenuUiEventHandlers();
+            AttachUiEventHandlers();
+            AttachMapEventHandlers();
+            menuUi = null;
+        }
+    }
+
+    private void ShowInGameMenu()
+    {
+        ui.InGameMenuUIInstance.Show();
+    }
+
+    private void HideInGameMenu()
+    {
+        ui.InGameMenuUIInstance.Hide();
+    }
+
+    private void ResumeButtonClickedHandler(object sender, EventArgs e)
+    {
+        OnEscape();
+    }
+
+    private void RestartButtonClickedHandler(object sender, EventArgs e)
+    {
+        //parent.GoToInGameState();
+        throw new NotImplementedException();
+    }
+
+    private void MainMenuButtonClickedHandler(object sender, EventArgs e)
+    {
+        //parent.GoToMainMenuState();
+        throw new NotImplementedException();
+    }
+
+    private void HelpButtonClickedHandler(object sender, EventArgs e)
+    {
+        //parent.GoToHelpState();
+        throw new NotImplementedException();
+    }
+
+    private void QuitButtonClickedHandler(object sender, EventArgs e)
+    {
+        Application.Quit();
+    }
+    #endregion
 
     public void RestartGame()
 	{

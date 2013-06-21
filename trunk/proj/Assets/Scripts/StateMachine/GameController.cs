@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 public class GameController : MonoBehaviour {
@@ -8,6 +8,14 @@ public class GameController : MonoBehaviour {
 	void Start () {
 		CurrentGameState = GameState.InitialState(this);
 	}
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            CurrentGameState.OnEscape();
+        }
+    }
 	
 	public void GoToMainMenuState()
 	{
