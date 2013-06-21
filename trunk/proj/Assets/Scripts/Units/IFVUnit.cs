@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 public class IFVUnit : Unit
@@ -20,8 +20,9 @@ public class IFVUnit : Unit
         }
     }
 
-    public override void EndTour()
+    public override void EndTurn()
     {
+        base.EndTurn();
         if (toursToEndSpecial > 0)
             --toursToEndSpecial;
         if (toursToEndSpecial == 0)

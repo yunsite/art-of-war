@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 public class InGameState : GameState
@@ -142,6 +142,11 @@ public class InGameState : GameState
     private void BeginTurn()
     {
         PlayerInfo player = mapManager.Players[currentPlayer];
+        foreach (Unit unit in player.Units)
+        {
+            unit.BeginTurn();
+        }
+
         turn = new ReadyState(ui, player);
         turn.Enter();
         player.MainCamera.gameObject.SetActive(true);
@@ -156,7 +161,7 @@ public class InGameState : GameState
         turn.Exit();
         foreach (Unit unit in player.Units)
         {
-            unit.EndTour();
+            unit.EndTurn();
         }
     }
     #endregion

@@ -36,8 +36,9 @@ public class Helicopter : Unit
 			canUse = false;
 		}
     }   
-	public override void EndTour ()
+	public override void EndTurn ()
 	{
+        base.EndTurn();
 		canUse = true;
 	}
 	public bool CanUseSpecial()

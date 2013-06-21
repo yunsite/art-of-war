@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -56,8 +56,9 @@ public class Tank : Unit
 		//SelectRange(SelectionMode.NoAction, 0.0f);
 		//OnActionCompleted();
     }   
-	public override void EndTour ()
+	public override void EndTurn ()
 	{
+        base.EndTurn();
 		canUse = true;
 	}
 	public override void SelectSpecialAbility ()

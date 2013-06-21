@@ -23,8 +23,9 @@ public class HeavyTank : Unit
         }
     }
 
-    public override void EndTour()
+    public override void EndTurn()
     {
+        base.EndTurn();
         if (toursToEndSpecial > 0)
             --toursToEndSpecial;
         if (toursToEndSpecial == 0)
