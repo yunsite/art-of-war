@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class GameController : MonoBehaviour {
-	
+
+    private bool isLoaded = false;
 	public GameState CurrentGameState { get; private set; }
 	
 	void Start () {
 		CurrentGameState = GameState.InitialState(this);
+        CurrentGameState.Enter();
 	}
 
     void Update()
@@ -19,33 +22,63 @@ public class GameController : MonoBehaviour {
 	
 	public void GoToMainMenuState()
 	{
-		CurrentGameState = CurrentGameState.SwitchState(GameStateEnum.MainMenu);
+        StartCoroutine(SwitchState(GameStateEnum.MainMenu));
 	}
 	
 	public void GoToMapSelectionState()
 	{
-		CurrentGameState = CurrentGameState.SwitchState(GameStateEnum.MapSelection);
+        StartCoroutine(SwitchState(GameStateEnum.MapSelection));
 	}
 	
 	public void GoToInGameState()
 	{
-		CurrentGameState = CurrentGameState.SwitchState(GameStateEnum.InGame);
+        StartCoroutine(SwitchState(GameStateEnum.InGame));
 	}	
 	
 	public void GoToHighScoreState()	
 	{
-		CurrentGameState = CurrentGameState.SwitchState(GameStateEnum.HighScores);
+        StartCoroutine(SwitchState(GameStateEnum.HighScores));
 	}
 
 	public void GoToHelpState()	
 	{
-		CurrentGameState = CurrentGameState.SwitchState(GameStateEnum.Help);
+        StartCoroutine(SwitchState(GameStateEnum.Help));
 	}	
 	
 	public void GoToPlaceUnitsState()
 	{
-		CurrentGameState = CurrentGameState.SwitchState(GameStateEnum.PlaceUnits);
+        StartCoroutine(SwitchState(GameStateEnum.PlaceUnits));
 	}
+
+    IEnumerator SwitchState(GameStateEnum state)
+    {
+        CurrentGameState.Exit();
+        CurrentGameState = CurrentGameState.SwitchState(state);
+        string levelName = CurrentGameState.LevelName;
+        if (!string.IsNullOrEmpty(levelName))
+        {
+            isLoaded = false;
+            if (CurrentGameState.IsLevelAdditive)
+            {
+                // Application.LoadLevelAdditiveAsync tylko w Unity Pro :(
+                Application.LoadLevelAdditive(levelName);
+            }
+            else
+            {
+                // Application.LoadLevelAsync tylko w Unity Pro :(
+                Application.LoadLevel(levelName);
+            }
+
+            while (!isLoaded) yield return null;
+        }
+
+        CurrentGameState.Enter();
+    }
+
+    void OnLevelWasLoaded(int index)
+    {
+        isLoaded = true;
+    }
 }
 
 

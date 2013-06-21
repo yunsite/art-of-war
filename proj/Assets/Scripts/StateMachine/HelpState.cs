@@ -10,7 +10,7 @@ public class HelpState : GameState {
 	
 	public HelpState (GameController controller) : base(controller) { }
 	
-	protected override void Enter ()
+	public override void Enter ()
 	{
 		base.Enter ();
 		GameManager manager = GameManager.Instance();
@@ -21,7 +21,7 @@ public class HelpState : GameState {
 		ui.Show();
 	}
 	
-	protected override void Exit ()
+	public override void Exit ()
 	{
 		ui.Hide();
 		DetachEventHandlers();
