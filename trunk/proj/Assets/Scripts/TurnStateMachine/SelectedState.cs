@@ -27,12 +27,26 @@ public class SelectedState : TurnState
         base.Enter();
         unit.Select();
         Debug.Log("Zmieniam jednostkę zaznaczoną na " + unit);
+        ShowStats();
     }
 
     public override void Exit()
     {
         unit.Deselect();
         base.Exit();
+    }
+
+    private void ShowStats()
+    {
+        ui.UnitHP.text = string.Format(
+            "HP: {0:N0}%", (float)unit.HealthStatistics.RemainingPoints * 100f / (float)unit.HealthStatistics.TotalPoints);
+        ui.UnitHP.MarkAsChanged();
+        ui.UnitMovementPoints.text = string.Format(
+            "Move: {0:N1}", unit.MovementStatistics.RemainingRange);
+        ui.UnitMovementPoints.MarkAsChanged();
+        ui.UnitStats.text = string.Format(
+            "Attacks: {0}", unit.AttackStatistics.RemainingQuantity);
+        ui.UnitStats.MarkAsChanged();
     }
 
     #region Events

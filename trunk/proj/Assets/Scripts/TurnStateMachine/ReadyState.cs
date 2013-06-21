@@ -10,6 +10,22 @@ public class ReadyState : ActionsDisabledState
 {
     public ReadyState(InGameUI ui, PlayerInfo player) : base(ui, player) { }
 
+    public override void Enter()
+    {
+        ResetStats();
+    }
+
+    private void ResetStats()
+    {
+        string line = "-----";
+        ui.UnitHP.text = line;
+        ui.UnitHP.MarkAsChanged();
+        ui.UnitMovementPoints.text = line;
+        ui.UnitMovementPoints.MarkAsChanged();
+        ui.UnitStats.text = line;
+        ui.UnitStats.MarkAsChanged();
+    }
+
     #region Events
     public override TurnState UnitSelected(Unit unit)
     {
