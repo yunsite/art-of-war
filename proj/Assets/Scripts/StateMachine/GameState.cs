@@ -56,6 +56,8 @@ public abstract class GameState
 		
 		return result;
 	}
+
+    public virtual void OnEscape() { }
 }
 
 
