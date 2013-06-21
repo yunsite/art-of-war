@@ -12,6 +12,7 @@ public class FieldAttackSelectedState : SelectedState
     public override void Enter()
     {
         base.Enter();
+        unit.SelectAttack();
     }
 
     #region Events

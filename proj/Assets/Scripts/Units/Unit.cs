@@ -229,15 +229,14 @@ public class Unit : MonoBehaviour
 
     public virtual void Attack(Unit enemy)
     {
-        Debug.Log("Unit.Attack(Unit enemy)");
         if (!isBusy && CanAttack(enemy.transform.position))
         {
             --AttackStatistics.RemainingQuantity;
-            StartCoroutine(ProcessAttack(enemy));
+            StartCoroutine(ProcessAttack(enemy.transform.position));
         }
     }
 
-    public void Attack(Vector3 target)
+    public virtual void Attack(Vector3 target)
     {
         throw new NotSupportedException();
     }
@@ -253,9 +252,8 @@ public class Unit : MonoBehaviour
         return CanAttack() && distance <= AttackStatistics.Range;
     }
 
-    IEnumerator ProcessAttack(Unit enemy)
+    protected internal IEnumerator ProcessAttack(Vector3 target)
     {
-        Vector3 target = enemy.transform.position;
         Quaternion turretBackup = AttackStatistics.Turrent.rotation;
         yield return StartCoroutine(AimTurret(target));
         Debug.Log("Turret aimed");
@@ -277,7 +275,7 @@ public class Unit : MonoBehaviour
 
     IEnumerator AimTurret(Vector3 target)
     {
-        Vector3 turretDirection = target - transform.position;
+        Vector3 turretDirection = target - AttackStatistics.Turrent.position;
         turretDirection.y = 0;
         turretDirection.Normalize();
 
@@ -293,7 +291,7 @@ public class Unit : MonoBehaviour
 
     IEnumerator AimCannon(Vector3 target)
     {
-        Vector3 direction = (target - transform.position).normalized;
+        Vector3 direction = (target - AttackStatistics.Cannon.position).normalized;
         Quaternion cannonRotation = Quaternion.LookRotation(
             Vector3.Cross(-direction, AttackStatistics.Cannon.up), AttackStatistics.Cannon.up);
         while (Mathf.Abs(Quaternion.Dot(AttackStatistics.Cannon.rotation, cannonRotation)) < 1f)
@@ -323,7 +321,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    IEnumerator BackupTurret(Quaternion turretBackup)
+    protected internal IEnumerator BackupTurret(Quaternion turretBackup)
     {
         while (Mathf.Abs(Quaternion.Dot(AttackStatistics.Turrent.rotation, turretBackup)) < 1f)
         {

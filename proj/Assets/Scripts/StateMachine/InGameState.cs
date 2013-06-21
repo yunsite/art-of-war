@@ -219,7 +219,10 @@ public class InGameState : GameState
         PlayerInfo player = mapManager.Players[currentPlayer];
         foreach (Unit unit in player.Units)
         {
-            unit.BeginTurn();
+            if (unit != null)
+            {
+                unit.BeginTurn();
+            }
         }
 
         turn = new ReadyState(ui, player);
@@ -236,7 +239,10 @@ public class InGameState : GameState
         turn.Exit();
         foreach (Unit unit in player.Units)
         {
-            unit.EndTurn();
+            if (unit != null)
+            {
+                unit.EndTurn();
+            }
         }
     }
     #endregion

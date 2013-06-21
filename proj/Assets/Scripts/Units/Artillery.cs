@@ -1,11 +1,25 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections.Generic;
 
 public class Artillery : Unit
 {
 	private bool canUse = true;
 	private const float radius = 30.0f;
+
+    public override void Attack(Unit enemy)
+    {
+        throw new NotSupportedException();
+    }
+
+    public override void Attack(Vector3 target)
+    {
+        if (!isBusy && CanAttack(target))
+        {
+            --AttackStatistics.RemainingQuantity;
+            StartCoroutine(ProcessAttack(target));
+        }
+    }
+
     public void UseSpecial(Vector3 position)
     {
 		if(canUse)
@@ -21,12 +35,14 @@ public class Artillery : Unit
 			}
 			canUse = false;
 		}
-    }   
+    }  
+ 
 	public override void EndTurn ()
 	{
         base.EndTurn();
 		canUse = true;
 	}
+
 	public override void SelectSpecialAbility ()
 	{
 		if(canUse)
