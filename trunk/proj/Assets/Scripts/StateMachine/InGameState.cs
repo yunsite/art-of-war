@@ -14,7 +14,7 @@ public class InGameState : GameState
         get { return "MainGameScene"; }
     }
 
-    public InGameState(GameController controller) : base(controller) { }
+    public InGameState(GameController controller, GameState previous) : base(controller, previous) { }
 
     public override void Enter()
     {
@@ -39,7 +39,6 @@ public class InGameState : GameState
         DetachMapEventHandlers();
         DetachUiEventHandlers();
         base.Exit();
-        DestroyManager();
     }
 
     private void PrepareCameras()
@@ -51,14 +50,22 @@ public class InGameState : GameState
         }
     }
 
+    private void ActivateMinimap()
+    {
+        PlayerInfo player = mapManager.Players[currentPlayer];
+        player.MinimapCamera.gameObject.SetActive(true);
+    }
+
+
+    private void DeactivateMinimap()
+    {
+        PlayerInfo player = mapManager.Players[currentPlayer];
+        player.MinimapCamera.gameObject.SetActive(false);
+    }
+
     private void LookupMapManager()
     {
         mapManager = (MapManager)GameObject.FindObjectOfType(typeof(MapManager));
-    }
-
-    private void DestroyManager()
-    {
-        GameObject.Destroy(mapManager.gameObject);
     }
 
     #region Event handlers

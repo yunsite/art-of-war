@@ -1,11 +1,16 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 public class MainMenuState : GameState {
 	
 	private MainMenuUI ui;
 
-	public MainMenuState(GameController controller) : base (controller) { }
+    public override string LevelName
+    {
+        get { return "IntroIslandScene"; }
+    }
+
+	public MainMenuState(GameController controller, GameState previous) : base (controller, previous) { }
 
     public override void Enter()
 	{

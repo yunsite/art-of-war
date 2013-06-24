@@ -4,7 +4,7 @@ public class PlaceUnitState : GameState
 {
 	//private SelectedUIInstance ui;
 	
-	public PlaceUnitState(GameController controller) : base (controller) 
+	public PlaceUnitState(GameController controller, GameState previous) : base (controller, previous) 
 	{
 		if (UnityEngine.Application.loadedLevelName != "HillyTestScene") 
 			UnityEngine.Application.LoadLevel("HillyTestScene");
