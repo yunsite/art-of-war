@@ -75,7 +75,8 @@ public class GameController : MonoBehaviour {
     IEnumerator LoadScene()
     {
         string levelName = CurrentGameState.LevelName;
-        if (!string.IsNullOrEmpty(levelName) && Application.loadedLevelName != levelName)
+        if (!string.IsNullOrEmpty(levelName)
+            && (Application.loadedLevelName != levelName || CurrentGameState.ReloadOnEnter))
         {
             isLoaded = false;
             if (CurrentGameState.IsLevelAdditive)
