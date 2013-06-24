@@ -15,7 +15,13 @@ public abstract class GameState
     {
         get { return string.Empty; }
     }
+
     public virtual bool IsLevelAdditive
+    {
+        get { return false; }
+    }
+
+    public virtual bool ReloadOnEnter
     {
         get { return false; }
     }

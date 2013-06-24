@@ -14,6 +14,11 @@ public class InGameState : GameState
         get { return "MainGameScene"; }
     }
 
+    public override bool ReloadOnEnter
+    {
+        get { return true; }
+    }
+
     public InGameState(GameController controller, GameState previous) : base(controller, previous) { }
 
     public override void Enter()
@@ -48,19 +53,6 @@ public class InGameState : GameState
             player.MainCamera.gameObject.SetActive(false);
             player.MinimapCamera.gameObject.SetActive(false);
         }
-    }
-
-    private void ActivateMinimap()
-    {
-        PlayerInfo player = mapManager.Players[currentPlayer];
-        player.MinimapCamera.gameObject.SetActive(true);
-    }
-
-
-    private void DeactivateMinimap()
-    {
-        PlayerInfo player = mapManager.Players[currentPlayer];
-        player.MinimapCamera.gameObject.SetActive(false);
     }
 
     private void LookupMapManager()
