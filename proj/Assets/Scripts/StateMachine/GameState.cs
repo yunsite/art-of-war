@@ -9,6 +9,7 @@ using System;
 public abstract class GameState
 {
 	protected GameController parent;
+    protected GameState previous;
     
     public virtual string LevelName
     {
@@ -19,37 +20,44 @@ public abstract class GameState
         get { return false; }
     }
 	
-	protected GameState(GameController parent) {
+	protected GameState(GameController parent, GameState previous) {
 		if (parent == null) throw new ArgumentNullException("parent");
 		this.parent = parent;
+        this.previous = previous;
 	}
 
     public static GameState InitialState(GameController controller)
     {
-        return ResolveState(GameStateEnum.MainMenu, controller);
+        return ResolveState(GameStateEnum.MainMenu, controller, null);
     }
 	
-	public GameState SwitchState(GameStateEnum nextState)
+	public GameState SwitchState(GameStateEnum nextState, GameState previous)
 	{
-		return ResolveState(nextState, parent);
+		return ResolveState(nextState, parent, previous);
 	}
-	
-	public virtual void Enter () { }
+
+    public GameState PreviousState()
+    {
+        if (previous == null) throw new InvalidOperationException("No previous state supported");
+        return previous;
+    }
+
+    public virtual void Enter() { }
     public virtual void Exit() { }
 	
-	private static GameState ResolveState(GameStateEnum state, GameController controller) {
+	private static GameState ResolveState(GameStateEnum state, GameController controller, GameState previous) {
 		GameState result;
 		switch (state) {
 		case GameStateEnum.Help:
-			result = new HelpState(controller);
+			result = new HelpState(controller, previous);
 			break;
 		case GameStateEnum.HighScores:
 			throw new NotImplementedException();
 		case GameStateEnum.InGame:
-			result = new InGameState(controller);
+			result = new InGameState(controller, previous);
 			break;
 		case GameStateEnum.MainMenu:
-			result = new MainMenuState(controller);
+			result = new MainMenuState(controller, previous);
 			break;
 		case GameStateEnum.MapSelection:
 			throw new NotImplementedException();

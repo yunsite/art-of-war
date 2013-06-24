@@ -7,8 +7,9 @@ public class GameController : MonoBehaviour {
     private bool isLoaded = false;
 	public GameState CurrentGameState { get; private set; }
 	
-	void Start () {
+	IEnumerator Start () {
 		CurrentGameState = GameState.InitialState(this);
+        yield return StartCoroutine(LoadScene());
         CurrentGameState.Enter();
 	}
 
@@ -50,12 +51,31 @@ public class GameController : MonoBehaviour {
         StartCoroutine(SwitchState(GameStateEnum.PlaceUnits));
 	}
 
+    public void GoToPreviousState()
+    {
+        StartCoroutine(PreviousState());
+    }
+
     IEnumerator SwitchState(GameStateEnum state)
     {
         CurrentGameState.Exit();
-        CurrentGameState = CurrentGameState.SwitchState(state);
+        CurrentGameState = CurrentGameState.SwitchState(state, CurrentGameState);
+        yield return StartCoroutine(LoadScene());
+        CurrentGameState.Enter();
+    }
+
+    IEnumerator PreviousState()
+    {
+        CurrentGameState.Exit();
+        CurrentGameState = CurrentGameState.PreviousState();
+        yield return StartCoroutine(LoadScene());
+        CurrentGameState.Enter();
+    }
+
+    IEnumerator LoadScene()
+    {
         string levelName = CurrentGameState.LevelName;
-        if (!string.IsNullOrEmpty(levelName))
+        if (!string.IsNullOrEmpty(levelName) && Application.loadedLevelName != levelName)
         {
             isLoaded = false;
             if (CurrentGameState.IsLevelAdditive)
@@ -71,8 +91,6 @@ public class GameController : MonoBehaviour {
 
             while (!isLoaded) yield return null;
         }
-
-        CurrentGameState.Enter();
     }
 
     void OnLevelWasLoaded(int index)

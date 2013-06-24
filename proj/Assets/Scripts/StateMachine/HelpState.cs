@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +8,7 @@ public class HelpState : GameState {
 	private UILogic selectedItem;
 	private UnitSelection unitSelection;
 	
-	public HelpState (GameController controller) : base(controller) { }
+	public HelpState (GameController controller, GameState previous) : base(controller, previous) { }
 	
 	public override void Enter ()
 	{
@@ -84,7 +84,7 @@ public class HelpState : GameState {
 	}
 	
 	private void BackButtonClicked(object sender, EventArgs args) {
-		parent.GoToMainMenuState();
+        parent.GoToPreviousState();
 	}
 	
 	private void GoalTabButtonClicked(object sender, EventArgs args) {
@@ -113,14 +113,14 @@ public class HelpState : GameState {
 		
 		// Alignment for ButtonsFont 42
 		private const string unitDescriptionFormat = 
-				"Health Points:                                    {0}" +
-				"\nDeffence:                                            {1}" +
-				"\nAttack Area:                                       {2}" +
-				"\nAttack Power:                                    {3}" +
-				"\nAttack Range:                                    {4}" +
-				"\nAttack Quantity:                                 {5}" +
-				"\nMovement Range:                              {6}" +
-				"\nDifficult Terrain Movement Ability:    {7}" +
+				"Health Points:                                              {0}" +
+				"\nDeffence:                                                      {1}" +
+				"\nAttack Area:                                                 {2}" +
+				"\nAttack Power:                                              {3}" +
+				"\nAttack Range:                                              {4}" +
+				"\nAttack Quantity:                                           {5}" +
+				"\nMovement Range:                                        {6}" +
+				"\nDifficult Terrain Movement Ability:              {7}" +
 				"\nSpecial Ability: \n    {8}";
 		
 		public UnitSelection (HelpUnitsUI ui) {
