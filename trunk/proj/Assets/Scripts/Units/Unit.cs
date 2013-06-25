@@ -135,6 +135,20 @@ public class Unit : MonoBehaviour
 
     #endregion
 
+    #region Turns items
+    public virtual void BeginTurn()
+    {
+        SwitchToOwnerIcon();
+    }
+
+    public virtual void EndTurn()
+    {
+        SwitchToEnemyIcon();
+        ResetMovementPoints();
+        ResetAttackPoints();
+    }
+    #endregion
+
     #region Movement items
 
     [Serializable]
@@ -338,6 +352,13 @@ public class Unit : MonoBehaviour
 
     #endregion
 
+    #region Special ability items
+    public virtual void UseSpecial()
+    {
+        throw new NotSupportedException();
+    }
+    #endregion
+
     #region Health items
 
     [Serializable]
@@ -390,27 +411,6 @@ public class Unit : MonoBehaviour
         if (ActionCompleted != null)
             ActionCompleted(this, new EventArgs());
     }
-    #endregion
-
-    #region Public Methods
-
-    public virtual void BeginTurn()
-    {
-        SwitchToOwnerIcon();
-    }
-
-    public virtual void EndTurn()
-    {
-        SwitchToEnemyIcon();
-        ResetMovementPoints();
-		ResetAttackPoints();
-    }
-    
-    public virtual void UseSpecial()
-    {
-        throw new NotSupportedException();
-    }
-
     #endregion
 }
 

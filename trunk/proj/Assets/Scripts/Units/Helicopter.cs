@@ -4,6 +4,25 @@ using UnityEngine;
 
 public class Helicopter : Unit
 {
+    #region Selection items
+    public override void SelectSpecialAbility()
+    {
+        if (canUse)
+            SelectRange(SelectionMode.SpecialAbility, 0.0f);
+        else
+            SelectRange(SelectionMode.NoAction, 0.0f);
+    }
+    #endregion
+
+    #region Turns items
+    public override void EndTurn()
+    {
+        base.EndTurn();
+        canUse = true;
+    }
+    #endregion
+
+    #region Movement items
     public override void MoveToPosition(Vector3 worldPosition)
     {
         float distance = (worldPosition - selfTransform.position).magnitude;
@@ -13,52 +32,6 @@ public class Helicopter : Unit
             StartCoroutine(ProcessMotion(worldPosition));
         }
     }
-
-    public override void Attack(Unit enemy)
-    {
-        // Jeszcze nie gotowe
-        throw new System.NotImplementedException();
-    }
-
-	private bool canUse = true;
-	/// <summary>
-	/// Uses the special ability which is attack 2 or 3 or 4 enemy units with full valude devided by
-	/// attacked enemies count.
-	/// </summary>
-	/// <param name='unitsToAttack'>
-	/// Units to attack.
-	/// </param>
-    public void UseSpecial(List<Unit> unitsToAttack)
-    {
-		if(canUse)
-		{			
-			float attackValue = AttackStatistics.Power / unitsToAttack.Count;
-			foreach(Unit u in unitsToAttack)
-			{
-				if(u.PlayerOwner != this.PlayerOwner)
-				{
-					u.GetDamadge(attackValue, this);
-				}
-			}
-			canUse = false;
-		}
-    }   
-	public override void EndTurn ()
-	{
-        base.EndTurn();
-		canUse = true;
-	}
-	public bool CanUseSpecial()
-	{
-		return canUse;
-	}
-	public override void SelectSpecialAbility ()
-	{
-		if(canUse)
-			SelectRange(SelectionMode.SpecialAbility, 0.0f);
-		else
-			SelectRange(SelectionMode.NoAction, 0.0f);
-	}
 
     IEnumerator ProcessMotion(Vector3 target)
     {
@@ -86,4 +59,37 @@ public class Helicopter : Unit
         audio.Stop();
         OnActionCompleted();
     }
+    #endregion
+
+    #region Special ability items
+    private bool canUse = true;
+
+    public bool CanUseSpecial()
+    {
+        return canUse;
+    }
+
+	/// <summary>
+	/// Uses the special ability which is attack 2 or 3 or 4 enemy units with full valude devided by
+	/// attacked enemies count.
+	/// </summary>
+	/// <param name='unitsToAttack'>
+	/// Units to attack.
+	/// </param>
+    public void UseSpecial(List<Unit> unitsToAttack)
+    {
+		if(canUse)
+		{			
+			float attackValue = AttackStatistics.Power / unitsToAttack.Count;
+			foreach(Unit u in unitsToAttack)
+			{
+				if(u.PlayerOwner != this.PlayerOwner)
+				{
+					u.GetDamadge(attackValue, this);
+				}
+			}
+			canUse = false;
+		}
+    }
+    #endregion
 }
