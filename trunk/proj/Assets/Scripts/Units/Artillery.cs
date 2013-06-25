@@ -19,7 +19,13 @@ public class Artillery : Unit
             StartCoroutine(ProcessAttack(target));
         }
     }
-
+	
+	/// <summary>
+	/// Uses the special ability which is attack all enemies into sphere with half attack value.
+	/// </summary>
+	/// <param name='position'>
+	/// Position where use clicked.
+	/// </param>
     public void UseSpecial(Vector3 position)
     {
 		if(canUse)

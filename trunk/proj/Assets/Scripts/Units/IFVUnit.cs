@@ -10,6 +10,9 @@ public class IFVUnit : Unit
     {
         toursToEndSpecial = 0;
     }
+	/// <summary>
+	/// Uses the special ability which is increase movement ability
+	/// </summary>
     public override void UseSpecial()
     {
         if (toursToEndSpecial == 0) //use special only if is not in use already
