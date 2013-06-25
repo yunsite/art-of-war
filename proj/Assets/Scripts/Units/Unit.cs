@@ -8,7 +8,6 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     protected Transform selfTransform;
-    protected bool isBusy = false;
 
     void Awake()
     {
@@ -167,7 +166,7 @@ public class Unit : MonoBehaviour
     public virtual void MoveToPosition(Vector3 worldPosition)
     {
         float distance = (worldPosition - selfTransform.position).magnitude;
-        if (!isBusy && CanMove(worldPosition))
+        if (CanMove(worldPosition))
         {
             MovementStatistics.RemainingRange -= distance;
             StartCoroutine(ProcessMotion(worldPosition));
@@ -203,6 +202,7 @@ public class Unit : MonoBehaviour
         float distance = offset.magnitude;
         audio.Play();
         animation.CrossFade("forward");
+        yield return new WaitForFixedUpdate();
         while (distance > MovementStatistics.TargetRadius)
         {
             Vector3 cross = Vector3.Cross(transform.forward, direction);
@@ -248,7 +248,7 @@ public class Unit : MonoBehaviour
 
     public virtual void Attack(Unit enemy)
     {
-        if (!isBusy && CanAttack(enemy.transform.position))
+        if (CanAttack(enemy.transform.position))
         {
             --AttackStatistics.RemainingQuantity;
             StartCoroutine(ProcessAttack(enemy.transform.position));

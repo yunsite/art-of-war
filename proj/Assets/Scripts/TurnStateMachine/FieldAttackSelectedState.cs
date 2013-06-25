@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Field area attack selection state of single player turn state machine.
@@ -42,9 +42,16 @@ public class FieldAttackSelectedState : SelectedState
     {
         if (unit.CanAttack(position))
         {
-            unit.Attack(position);
-            Debug.Log("Atakuje jednostka zaznaczona: " + unit + " obszar o �rodku w: " + position);
-            return new ActionExecutionState(ui, player, unit);
+            if (IsTargetVisible(position))
+            {
+                unit.Attack(position);
+                Debug.Log("Atakuje jednostka zaznaczona: " + unit + " obszar o środku w: " + position);
+                return new ActionExecutionState(ui, player, unit);
+            }
+            else
+            {
+                return this;
+            }
         }
         else
         {

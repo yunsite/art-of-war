@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Unit area attack selection state of single player turn state machine.
@@ -47,9 +47,16 @@ public class UnitAttackSelectedState : SelectedState
         }
         else if (unit.CanAttack(enemy.transform.position))
         {
-            unit.Attack(enemy);
-            Debug.Log("Atakuje jednostka zaznaczona: " + unit + " jednostk�: " + enemy);
-            return new ActionExecutionState(ui, player, unit);
+            if (IsTargetVisible(enemy.transform.position))
+            {
+                unit.Attack(enemy);
+                Debug.Log("Atakuje jednostka zaznaczona: " + unit + " jednostkę: " + enemy);
+                return new ActionExecutionState(ui, player, unit);
+            }
+            else
+            {
+                return this;
+            }
         }
         else
         {

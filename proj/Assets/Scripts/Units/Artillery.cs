@@ -13,7 +13,7 @@ public class Artillery : Unit
 
     public override void Attack(Vector3 target)
     {
-        if (!isBusy && CanAttack(target))
+        if (CanAttack(target))
         {
             --AttackStatistics.RemainingQuantity;
             StartCoroutine(ProcessAttack(target));
