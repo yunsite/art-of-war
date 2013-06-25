@@ -361,6 +361,8 @@ public class Unit : MonoBehaviour
     //nie wiem jak implementowac tu pewnie maja leciec jakies efekty umierania najpierw
     public void Die()
     {
+		GameObject det = Instantiate(Resources.Load("Prefab_Detonator"), transform.position, Quaternion.identity) as GameObject;
+		Destroy(det, 20);
         Destroy(gameObject);
     }
 
