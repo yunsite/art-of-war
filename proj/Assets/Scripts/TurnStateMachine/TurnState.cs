@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 /// <summary>
@@ -12,9 +12,22 @@ public abstract class TurnState
 {
     private const string forbiddenEventErrorMessage = "Forbidden event in current turn state";
 
+    /// <summary>
+    /// Game UI reference.
+    /// </summary>
     protected InGameUI ui;
+
+    /// <summary>
+    /// Player info reference.
+    /// </summary>
     protected PlayerInfo player;
 
+    /// <summary>
+    /// Initializes turn state base properties.
+    /// </summary>
+    /// <param name="ui">UI reference.</param>
+    /// <param name="player">Player info reference.</param>
+    /// <exception cref="System.ArgumentNullException">Thrown when any parameter is null.</exception>
     protected TurnState(InGameUI ui, PlayerInfo player)
     {
         if (ui == null)

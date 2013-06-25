@@ -9,19 +9,36 @@ using UnityEngine;
 /// </summary>
 public class SelectedState : TurnState
 {
+    /// <summary>
+    /// Selected unit.
+    /// </summary>
     protected Unit unit;
 
+    /// <summary>
+    /// Creates selected unit state.
+    /// </summary>
+    /// <param name="ui">UI reference.</param>
+    /// <param name="player">Player info reference.</param>
+    /// <param name="unit">Selected unit.</param>
+    /// <exception cref="System.ArgumentNullException">Thrown when any parameter is null.</exception>
     protected internal SelectedState(InGameUI ui, PlayerInfo player, Unit unit)
         : base(ui, player)
     {
         if (unit == null)
         {
-            throw new ArgumentNullException("enemy");
+            throw new ArgumentNullException("unit");
         }
 
         this.unit = unit;
     }
 
+    /// <summary>
+    /// State entry behaviour, called in case of in-transition occurrence.
+    /// </summary>
+    /// <remarks>
+    /// Marks selected unit as selected and displays range.
+    /// Shows unit statistics.
+    /// </remarks>
     public override void Enter()
     {
         base.Enter();
@@ -30,6 +47,12 @@ public class SelectedState : TurnState
         ShowStats();
     }
 
+    /// <summary>
+    /// State exit behaviour, called in case of out-transition occurrence.
+    /// </summary>
+    /// <remarks>
+    /// Deselects unit.
+    /// </remarks>
     public override void Exit()
     {
         unit.Deselect();
@@ -50,6 +73,14 @@ public class SelectedState : TurnState
     }
 
     #region Events
+    /// <summary>
+    /// Unit selected event behaviour.
+    /// </summary>
+    /// <remarks>
+    /// Returns selected state if another players unit is clicked, otherwise ignores this event.
+    /// </remarks>
+    /// <param name="unit">Unit being selected.</param>
+    /// <returns>New state of single player turn state machine.</returns>
     public override TurnState UnitSelected(Unit unit)
     {
         if (unit != this.unit && unit.PlayerOwner == player.Index)
@@ -62,16 +93,38 @@ public class SelectedState : TurnState
         }
     }
 
+    /// <summary>
+    /// Terrain position selected event behaviour.
+    /// </summary>
+    /// <remarks>
+    /// Returns ready state.
+    /// </remarks>
+    /// <param name="unit">Terrain position being selected.</param>
+    /// <returns>New state of single player turn state machine.</returns>
     public override TurnState TerrainPositionSelected(Vector3 position)
     {
         return new ReadyState(ui, player);
     }
 
+    /// <summary>
+    /// Unit move action selected event behaviour.
+    /// </summary>
+    /// <remarks>
+    /// Returns move action selection state for selected unit.
+    /// </remarks>
+    /// <returns>New state of single player turn state machine.</returns>
     public override TurnState MoveActionSelected()
     {
         return new MoveSelectedState(ui, player, unit);
     }
 
+    /// <summary>
+    /// Unit attack action selected event behaviour.
+    /// </summary>
+    /// <remarks>
+    /// Returns unit or field attack selection state for selected unit.
+    /// </remarks>
+    /// <returns>New state of single player turn state machine.</returns>
     public override TurnState AttackActionSelected()
     {
         switch (unit.AttackStatistics.Area)
@@ -84,7 +137,15 @@ public class SelectedState : TurnState
                 throw new InvalidProgramException("Unreacheable code path.");
         }
     }
-	
+
+    /// <summary>
+    /// Unit special action selected event behaviour.
+    /// </summary>
+    /// <remarks>
+    /// Returns special ability selection state for specified type of unit
+    /// or executes special ability if no animation specified.
+    /// </remarks>
+    /// <returns>New state of single player turn state machine.</returns>
 	public override TurnState SpecialActionSelected ()
 	{
         switch (unit.UnitType)
@@ -96,12 +157,8 @@ public class SelectedState : TurnState
             case UnitTypeEnum.Tank:
                 return new TankSpecialAttackSelectedState(ui, player, unit); 
             case UnitTypeEnum.HeavyTank:
-                // Niema potrzeby tworzyć osobnego stanu dla ciężkiego czołgu,
-                // bo jego umiejętność specjalna nie wymaga żadnych argumentów.
                 HeavyTank heayTank = (HeavyTank)unit;
                 heayTank.UseSpecial();
-                // Jeżeli umiejętność specjalna będzie uruchamiać animację trzeba przejść do stanu:
-                // return new ActionExecutionState(ui, player, unit);
                 return new ReadyState(ui, player);
             case UnitTypeEnum.Helicopter:
                 return new HelicopterSpecialAttackSelectedState(ui, player, unit);
