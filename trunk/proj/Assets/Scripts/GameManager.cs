@@ -1,25 +1,32 @@
-using System;
 using UnityEngine;
 
+/// <summary>
+/// Singleton object class, representing root node, for accessing UI elements and game controller.
+/// Game object with this script is attached is never removed from scene.
+/// </summary>
 public class GameManager : MonoBehaviour
 {
-	//private HighScore highScoreInstance;
-	
+    /// <summary>
+    /// Root node of all UI elements.
+    /// </summary>
 	public GameUI GameUIInstance;
+
+    /// <summary>
+    /// Game controller, responsible for game state management.
+    /// </summary>
 	public GameController GameControllerInstance;
-	public event EventHandler LevelLoadedEvent;
-	void Awake () {
-		// Obiekt do którego przyłączony jest GameManager powinien przetrwać przełądowanie sceny.
-		DontDestroyOnLoad(transform.gameObject);
-	}
-	
-	private void Initialize()
-	{
-		//new GameState();
-	}
-	
+
+    /// <summary>
+    /// Returns singleton game manager instance.
+    /// </summary>
+    /// <returns>Singleton game manager object.</returns>
 	public static GameManager Instance()
 	{
 		return (GameManager)FindObjectOfType(typeof(GameManager));
 	}
+
+    void Awake()
+    {
+        DontDestroyOnLoad(transform.gameObject);
+    }
 }
