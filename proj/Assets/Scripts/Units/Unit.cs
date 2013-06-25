@@ -175,6 +175,11 @@ public class Unit : MonoBehaviour
     {
         MovementStatistics.RemainingRange = MovementStatistics.TotalRange;
     }
+	
+	private void ResetAttackPoints()
+	{
+		AttackStatistics.RemainingQuantity = AttackStatistics.TotalQuantity;
+	}
 
     IEnumerator ProcessMotion(Vector3 target)
     {
@@ -396,6 +401,7 @@ public class Unit : MonoBehaviour
     {
         SwitchToEnemyIcon();
         ResetMovementPoints();
+		ResetAttackPoints();
     }
     
     public virtual void UseSpecial()
