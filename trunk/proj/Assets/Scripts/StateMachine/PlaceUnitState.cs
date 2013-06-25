@@ -1,5 +1,9 @@
 using System;
 
+/// <summary>
+/// Game state representing placing unit game view.
+/// Not implemented yet.
+/// </summary>
 public class PlaceUnitState : GameState
 {
 	//private SelectedUIInstance ui;

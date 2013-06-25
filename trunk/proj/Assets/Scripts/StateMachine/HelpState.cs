@@ -2,14 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Game state representing help view.
+/// </summary>
 public class HelpState : GameState {
 	
 	private HelpUI ui;
 	private UILogic selectedItem;
 	private UnitSelection unitSelection;
 	
+    /// <summary>
+    /// Creates help game state instance.
+    /// </summary>
+    /// <param name="parent">Parent game controller.</param>
+    /// <param name="previous">Previous game state.</param>
+    /// <exception cref="System.ArgumentNullException">Thrown when parent is null.</exception>
 	public HelpState (GameController controller, GameState previous) : base(controller, previous) { }
-	
+
+    /// <summary>
+    /// State enter event. Initializes state internal variables and prepares view elements.
+    /// </summary>
 	public override void Enter ()
 	{
 		base.Enter ();
@@ -20,7 +32,10 @@ public class HelpState : GameState {
 		AttachEventHandlers();
 		ui.Show();
 	}
-	
+
+    /// <summary>
+    /// State exit event. Hides view elements.
+    /// </summary>
 	public override void Exit ()
 	{
 		ui.Hide();
