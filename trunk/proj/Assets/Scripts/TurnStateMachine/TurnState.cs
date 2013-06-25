@@ -10,7 +10,7 @@ using UnityEngine;
 /// </exception>
 public abstract class TurnState
 {
-    private const string forbiddenEventErrorMessage = "Forbidden event in current turn state";
+    private const string forbiddenEventErrorMessage = "Forbidden event in current turn state: ";
 
     /// <summary>
     /// Game UI reference.
@@ -47,12 +47,12 @@ public abstract class TurnState
     /// <summary>
     /// State entry behaviour, called in case of in-transition occurrence.
     /// </summary>
-    public virtual void Enter() { }
+    public virtual void Enter() { Debug.Log("ENTER: " + this); }
 
     /// <summary>
     /// State exit behaviour, called in case of out-transition occurrence.
     /// </summary>
-    public virtual void Exit() { }
+    public virtual void Exit() { Debug.Log("EXIT: " + this); }
 
     #region Events
     /// <summary>
@@ -65,7 +65,7 @@ public abstract class TurnState
     /// </exception>
     public virtual TurnState UnitSelected(Unit unit)
     {
-        throw new InvalidOperationException(forbiddenEventErrorMessage);
+        throw new InvalidOperationException(forbiddenEventErrorMessage + this);
     }
 
     /// <summary>
@@ -78,7 +78,7 @@ public abstract class TurnState
     /// </exception>
     public virtual TurnState TerrainPositionSelected(Vector3 position)
     {
-        throw new InvalidOperationException(forbiddenEventErrorMessage);
+        throw new InvalidOperationException(forbiddenEventErrorMessage + this);
     }
 
     /// <summary>
@@ -90,7 +90,7 @@ public abstract class TurnState
     /// </exception>
     public virtual TurnState MoveActionSelected()
     {
-        throw new InvalidOperationException(forbiddenEventErrorMessage);
+        throw new InvalidOperationException(forbiddenEventErrorMessage + this);
     }
 
     /// <summary>
@@ -102,7 +102,7 @@ public abstract class TurnState
     /// </exception>
     public virtual TurnState AttackActionSelected()
     {
-        throw new InvalidOperationException(forbiddenEventErrorMessage);
+        throw new InvalidOperationException(forbiddenEventErrorMessage + this);
     }
 
     /// <summary>
@@ -114,7 +114,7 @@ public abstract class TurnState
     /// </exception>
     public virtual TurnState SpecialActionSelected()
     {
-        throw new InvalidOperationException(forbiddenEventErrorMessage);
+        throw new InvalidOperationException(forbiddenEventErrorMessage + this);
     }
 
     /// <summary>
@@ -126,7 +126,7 @@ public abstract class TurnState
     /// </exception>
     public virtual TurnState ActionCompleted()
     {
-        throw new InvalidOperationException(forbiddenEventErrorMessage);
+        throw new InvalidOperationException(forbiddenEventErrorMessage + this);
     }
     #endregion
 }

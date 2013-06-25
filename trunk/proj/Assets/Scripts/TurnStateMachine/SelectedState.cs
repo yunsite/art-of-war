@@ -36,7 +36,7 @@ public class SelectedState : TurnState
     /// State entry behaviour, called in case of in-transition occurrence.
     /// </summary>
     /// <remarks>
-    /// Marks selected unit as selected and displays range.
+    /// Marks specified unit as selected.
     /// Shows unit statistics.
     /// </remarks>
     public override void Enter()
@@ -168,5 +168,20 @@ public class SelectedState : TurnState
                 throw new InvalidProgramException("Unreacheable code path.");
         }
 	}
+    #endregion
+
+    #region Helpers
+    /// <summary>
+    /// Checks if specified target point is visible by currently selected unit.
+    /// </summary>
+    /// <param name="target">Target point.</param>
+    /// <returns>Target visibility.</returns>
+    protected bool IsTargetVisible(Vector3 target)
+    {
+        BoxCollider collider = unit.GetComponent<BoxCollider>();
+        Vector3 position = unit.transform.position + collider.center;
+        Vector3 direction = target + Vector3.up - position;
+        return !Physics.Raycast(position, direction.normalized, direction.magnitude);
+    }
     #endregion
 }

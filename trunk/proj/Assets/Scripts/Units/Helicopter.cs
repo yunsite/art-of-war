@@ -26,7 +26,7 @@ public class Helicopter : Unit
     public override void MoveToPosition(Vector3 worldPosition)
     {
         float distance = (worldPosition - selfTransform.position).magnitude;
-        if (!isBusy && CanMove(worldPosition))
+        if (CanMove(worldPosition))
         {
             MovementStatistics.RemainingRange -= distance;
             StartCoroutine(ProcessMotion(worldPosition));
@@ -40,6 +40,7 @@ public class Helicopter : Unit
         Vector3 direction = offset.normalized;
         float distance = offset.magnitude;
         audio.Play();
+        yield return new WaitForFixedUpdate();
         while (distance > MovementStatistics.TargetRadius)
         {
             Vector3 cross = Vector3.Cross(transform.forward, direction);

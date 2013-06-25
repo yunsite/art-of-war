@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Unit movement selection state of single player turn state machine.
@@ -7,8 +7,22 @@ using UnityEngine;
 /// </summary>
 public class MoveSelectedState : SelectedState
 {
+    /// <summary>
+    /// Creates move selected state.
+    /// </summary>
+    /// <param name="ui">UI reference.</param>
+    /// <param name="player">Player info reference.</param>
+    /// <param name="unit">Selected unit.</param>
+    /// <exception cref="System.ArgumentNullException">Thrown when any parameter is null.</exception>
     internal MoveSelectedState(InGameUI ui, PlayerInfo player, Unit unit) : base(ui, player, unit) { }
 
+    /// <summary>
+    /// State entry behaviour, called in case of in-transition occurrence.
+    /// </summary>
+    /// <remarks>
+    /// Marks specified unit as selected for movement and displays range.
+    /// Shows unit statistics.
+    /// </remarks>
     public override void Enter()
     {
         base.Enter();
@@ -16,8 +30,18 @@ public class MoveSelectedState : SelectedState
     }
 
     #region Events
+    /// <summary>
+    /// Terrain position selected event behaviour.
+    /// </summary>
+    /// <remarks>
+    /// Triggers movement and returns action execution state if unit can move,
+    /// therwise ignores that event.
+    /// </remarks>
+    /// <param name="unit">Terrain position being selected.</param>
+    /// <returns>New state of single player turn state machine.</returns>
     public override TurnState TerrainPositionSelected(Vector3 position)
     {
+        position.y = unit.transform.position.y;
         if (unit.CanMove(position))
         {
             if (IsTargetVisible(position))
@@ -34,16 +58,6 @@ public class MoveSelectedState : SelectedState
         {
             return base.TerrainPositionSelected(position);
         }
-    }
-    #endregion
-
-    #region Helpers
-    private bool IsTargetVisible(Vector3 target)
-    {
-        BoxCollider collider = unit.GetComponent<BoxCollider>();
-        Vector3 position = unit.transform.position + collider.center;
-        Vector3 direction = target + Vector3.up - position;
-        return !Physics.Raycast(position, direction.normalized, direction.magnitude);
     }
     #endregion
 }
