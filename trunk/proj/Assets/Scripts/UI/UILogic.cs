@@ -1,13 +1,23 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class UILogic : MonoBehaviour {
+/// <summary>
+/// Base clas of all ui elements with show/hide utility.
+/// </summary>
+public class UILogic : MonoBehaviour
+{
+    /// <summary>
+    /// Show underlying game object.
+    /// </summary>
+    public virtual void Show()
+    {
+        gameObject.SetActive(true);
+    }
 
-	public virtual void Show () {
-		gameObject.SetActive(true);
-	}
-	
-	public virtual void Hide () {
-		gameObject.SetActive(false);
-	}
-	
+    /// <summary>
+    /// Hide underlying game object.
+    /// </summary>
+    public virtual void Hide()
+    {
+        gameObject.SetActive(false);
+    }
 }
