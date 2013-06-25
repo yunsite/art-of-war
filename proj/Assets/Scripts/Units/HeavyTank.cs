@@ -10,6 +10,10 @@ public class HeavyTank : Unit
     {
         toursToEndSpecial = 0;
     }
+	
+	/// <summary>
+	/// Uses the special ability which is increase defence for 2 rounds with block movement ability
+	/// </summary>
     public override void UseSpecial()
     {
         if (toursToEndSpecial == 0) //use special only if is not in use already
@@ -22,7 +26,10 @@ public class HeavyTank : Unit
             MovementStatistics.RemainingRange = 0.0f;
         }
     }
-
+	
+	/// <summary>
+	/// Ends the turn -> make normal defence and movement ability
+	/// </summary>
     public override void EndTurn()
     {
         base.EndTurn();

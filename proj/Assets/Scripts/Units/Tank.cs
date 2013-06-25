@@ -16,6 +16,14 @@ public class Tank : Unit
 			return 1;
 		}
 	}
+	/// <summary>
+	/// Uses the special ability which is attack all enemy units on line between this Tank 
+	/// and point defined in parameter position. The first hited enemy get 100% of normal attack value
+	/// second take 50% and so forth.
+	/// </summary>
+	/// <param name='position'>
+	/// Position clicked by user.
+	/// </param>
     public void UseSpecial(Vector3 position)
     {
 		if(canUse)

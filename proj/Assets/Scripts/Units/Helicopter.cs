@@ -21,6 +21,13 @@ public class Helicopter : Unit
     }
 
 	private bool canUse = true;
+	/// <summary>
+	/// Uses the special ability which is attack 2 or 3 or 4 enemy units with full valude devided by
+	/// attacked enemies count.
+	/// </summary>
+	/// <param name='unitsToAttack'>
+	/// Units to attack.
+	/// </param>
     public void UseSpecial(List<Unit> unitsToAttack)
     {
 		if(canUse)
