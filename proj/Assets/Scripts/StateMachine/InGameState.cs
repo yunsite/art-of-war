@@ -1,26 +1,47 @@
 ﻿using System;
 using UnityEngine;
 
+/// <summary>
+/// Game state representing level gameplay viwe.
+/// </summary>
 public class InGameState : GameState
 {
-    private int currentPlayer; // 0 - Player1; 1 - Plyer2;
+    private int currentPlayer;
 	private InGameUI ui;
     private InGameMenuUI menuUi;
     private MapManager mapManager;
     private TurnState turn;
 
+    /// <summary>
+    /// Gets level scene name associated with gameplay.
+    /// Temporarily associated to fixed scene.
+    /// </summary>
     public override string LevelName
     {
         get { return "MainGameScene"; }
     }
 
+    /// <summary>
+    /// Gets reload level in state enter indicator.
+    /// Returns true when level scene should be reloaded each time when entering current state, otherwise false.
+    /// Defaults to true.
+    /// </summary>
     public override bool ReloadOnEnter
     {
         get { return true; }
     }
 
+    /// <summary>
+    /// Creates in game state instance.
+    /// </summary>
+    /// <param name="parent">Parent game controller.</param>
+    /// <param name="previous">Previous game state.</param>
+    /// <exception cref="System.ArgumentNullException">Thrown when parent is null.</exception>
     public InGameState(GameController controller, GameState previous) : base(controller, previous) { }
 
+    /// <summary>
+    /// State enter event. Initializes state internal variables and prepares view elements.
+    /// </summary>
     public override void Enter()
     {
         base.Enter();
@@ -35,6 +56,9 @@ public class InGameState : GameState
         ui.Show();
     }
 
+    /// <summary>
+    /// State exit event. Hides view elements.
+    /// </summary>
     public override void Exit()
     {
         ui.Hide();
@@ -128,6 +152,9 @@ public class InGameState : GameState
 
     #region Menu items
 
+    /// <summary>
+    /// Escape key clicked event. Toggles in game menu view.
+    /// </summary>
     public override void OnEscape()
     {
         if (menuUi == null)
@@ -188,11 +215,6 @@ public class InGameState : GameState
         Application.Quit();
     }
     #endregion
-
-    public void RestartGame()
-	{
-		throw new NotImplementedException();
-	}
 
     #region Turns management
     private bool CheckEndGameConditions()

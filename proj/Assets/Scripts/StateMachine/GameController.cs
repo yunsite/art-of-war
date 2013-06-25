@@ -1,17 +1,89 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Entire game controller responsible for game state management and scene management.
+/// </summary>
 public class GameController : MonoBehaviour {
 
     private bool isLoaded = false;
+
+    /// <summary>
+    /// Gets current game state instance.
+    /// </summary>
 	public GameState CurrentGameState { get; private set; }
 	
-	IEnumerator Start () {
-		CurrentGameState = GameState.InitialState(this);
+    /// <summary>
+    /// Switches current game state to main menu state.
+    /// </summary>
+	public void GoToMainMenuState()
+	{
+        StartCoroutine(SwitchState(GameStateEnum.MainMenu));
+	}
+
+    /// <summary>
+    /// Switches current game state to map selection state.
+    /// </summary>
+    /// <remarks>
+    /// Map selection state is not implemented yet.
+    /// </remarks>
+	public void GoToMapSelectionState()
+	{
+        StartCoroutine(SwitchState(GameStateEnum.MapSelection));
+	}
+
+    /// <summary>
+    /// Switches current game state to in game state.
+    /// </summary>
+	public void GoToInGameState()
+	{
+        StartCoroutine(SwitchState(GameStateEnum.InGame));
+	}
+
+    /// <summary>
+    /// Switches current game state to high score state.
+    /// </summary>
+    /// <remarks>
+    /// High score state is not implemented yet.
+    /// </remarks>
+	public void GoToHighScoreState()	
+	{
+        StartCoroutine(SwitchState(GameStateEnum.HighScores));
+	}
+
+    /// <summary>
+    /// Switches current game state to help state.
+    /// </summary>
+	public void GoToHelpState()	
+	{
+        StartCoroutine(SwitchState(GameStateEnum.Help));
+	}
+
+    /// <summary>
+    /// Switches current game state to place unit state.
+    /// </summary>
+    /// <remarks>
+    /// Place unit state is not implemented yet.
+    /// </remarks>
+	public void GoToPlaceUnitsState()
+	{
+        StartCoroutine(SwitchState(GameStateEnum.PlaceUnits));
+	}
+
+    /// <summary>
+    /// Switches current game state to previous game state.
+    /// </summary>
+    public void GoToPreviousState()
+    {
+        StartCoroutine(PreviousState());
+    }
+
+    IEnumerator Start()
+    {
+        CurrentGameState = GameState.InitialState(this);
         yield return StartCoroutine(LoadScene());
         CurrentGameState.Enter();
-	}
+    }
 
     void Update()
     {
@@ -19,41 +91,6 @@ public class GameController : MonoBehaviour {
         {
             CurrentGameState.OnEscape();
         }
-    }
-	
-	public void GoToMainMenuState()
-	{
-        StartCoroutine(SwitchState(GameStateEnum.MainMenu));
-	}
-	
-	public void GoToMapSelectionState()
-	{
-        StartCoroutine(SwitchState(GameStateEnum.MapSelection));
-	}
-	
-	public void GoToInGameState()
-	{
-        StartCoroutine(SwitchState(GameStateEnum.InGame));
-	}	
-	
-	public void GoToHighScoreState()	
-	{
-        StartCoroutine(SwitchState(GameStateEnum.HighScores));
-	}
-
-	public void GoToHelpState()	
-	{
-        StartCoroutine(SwitchState(GameStateEnum.Help));
-	}	
-	
-	public void GoToPlaceUnitsState()
-	{
-        StartCoroutine(SwitchState(GameStateEnum.PlaceUnits));
-	}
-
-    public void GoToPreviousState()
-    {
-        StartCoroutine(PreviousState());
     }
 
     IEnumerator SwitchState(GameStateEnum state)
@@ -81,12 +118,10 @@ public class GameController : MonoBehaviour {
             isLoaded = false;
             if (CurrentGameState.IsLevelAdditive)
             {
-                // Application.LoadLevelAdditiveAsync tylko w Unity Pro :(
                 Application.LoadLevelAdditive(levelName);
             }
             else
             {
-                // Application.LoadLevelAsync tylko w Unity Pro :(
                 Application.LoadLevel(levelName);
             }
 
