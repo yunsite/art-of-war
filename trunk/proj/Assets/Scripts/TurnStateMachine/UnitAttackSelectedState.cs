@@ -47,7 +47,7 @@ public class UnitAttackSelectedState : SelectedState
         }
         else if (unit.CanAttack(enemy.transform.position))
         {
-            if (IsTargetVisible(enemy.transform.position))
+            if (IsTargetVisible(enemy))
             {
                 unit.Attack(enemy);
                 Debug.Log("Atakuje jednostka zaznaczona: " + unit + " jednostkę: " + enemy);

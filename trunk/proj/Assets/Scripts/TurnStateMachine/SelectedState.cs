@@ -183,5 +183,27 @@ public class SelectedState : TurnState
         Vector3 direction = target + Vector3.up - position;
         return !Physics.Raycast(position, direction.normalized, direction.magnitude);
     }
+
+    /// <summary>
+    /// Checks if specified unit is visible by currently selected unit.
+    /// </summary>
+    /// <param name="target">Target unit.</param>
+    /// <returns>Target visibility.</returns>
+    protected bool IsTargetVisible(Unit target)
+    {
+        BoxCollider collider = unit.GetComponent<BoxCollider>();
+        BoxCollider targetCollider = target.GetComponent<BoxCollider>();
+        Vector3 position = unit.transform.position + collider.center;
+        Vector3 direction = target.transform.position + targetCollider.center - position;
+        RaycastHit hit;
+        if (Physics.Raycast(position, direction.normalized, out hit, direction.magnitude))
+        {
+            return hit.collider == targetCollider;
+        }
+        else
+        {
+            return true;
+        }
+    }
     #endregion
 }
