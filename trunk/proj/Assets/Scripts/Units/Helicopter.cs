@@ -2,9 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Represents helicopter type of unit.
+/// </summary>
 public class Helicopter : Unit
 {
     #region Selection items
+    /// <summary>
+    /// Selects unit or special ability.
+    /// </summary>
     public override void SelectSpecialAbility()
     {
         if (canUse)
@@ -15,6 +21,9 @@ public class Helicopter : Unit
     #endregion
 
     #region Turns items
+    /// <summary>
+    /// Resets per turn statistics.
+    /// </summary>
     public override void EndTurn()
     {
         base.EndTurn();
@@ -23,6 +32,10 @@ public class Helicopter : Unit
     #endregion
 
     #region Movement items
+    /// <summary>
+    /// Processes movement to target point.
+    /// </summary>
+    /// <param name="worldPosition">Target point.</param>
     public override void MoveToPosition(Vector3 worldPosition)
     {
         float distance = (worldPosition - selfTransform.position).magnitude;
@@ -65,6 +78,10 @@ public class Helicopter : Unit
     #region Special ability items
     private bool canUse = true;
 
+    /// <summary>
+    /// Returns true if unit is able to use special ability.
+    /// </summary>
+    /// <returns></returns>
     public bool CanUseSpecial()
     {
         return canUse;

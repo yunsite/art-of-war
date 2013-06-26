@@ -1,0 +1,580 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="GameManager">
+    <Position X="6" Y="0.5" Width="2.75" />
+    <AssociationLine Name="GameUIInstance" Type="GameUI" FixedToPoint="true">
+      <Path>
+        <Point X="8.75" Y="1.125" />
+        <Point X="10.75" Y="1.125" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.282" Y="-0.37" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="GameControllerInstance" Type="GameController" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8.375" Y="1.925" />
+        <Point X="8.375" Y="4.688" />
+        <Point X="8.375" Y="4.688" />
+        <Point X="8.375" Y="5.25" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.024" Y="0.244" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAEAAAAAAAAAQAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\GameManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="GameUIInstance" />
+      <Field Name="GameControllerInstance" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="GameController">
+    <Position X="6" Y="5.25" Width="2.75" />
+    <AssociationLine Name="CurrentGameState" Type="GameState" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.25" Y="5.25" />
+        <Point X="6.25" Y="4.715" />
+        <Point X="5.75" Y="4.715" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>gASAAAAAACAAAAAAIAQACAIAEAAACAAACIAAAAAAAAk=</HashCode>
+      <FileName>Assets\Scripts\StateMachine\GameController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="CurrentGameState" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="GameState">
+    <Position X="3.5" Y="2.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAQAAAQABAIAIAAAAAAAAEAAAAKEAAAAAABAA=</HashCode>
+      <FileName>Assets\Scripts\StateMachine\GameState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MainMenuState">
+    <Position X="0.75" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAACAAAAEAAAAAAAAEAAAAAEAAAgKEAAAAAAAAI=</HashCode>
+      <FileName>Assets\Scripts\StateMachine\MainMenuState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HelpState">
+    <Position X="0.75" Y="4.25" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="HelpState.UnitSelection" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\StateMachine\HelpState.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAEGAAAAEQAAAABAAAAAAAAEAAAAIAQQAIAUAAI=</HashCode>
+      <FileName>Assets\Scripts\StateMachine\HelpState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InGameState">
+    <Position X="4.5" Y="10" Width="3" />
+    <InheritanceLine Type="GameState" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.625" Y="6.68" />
+        <Point X="4.625" Y="9.688" />
+        <Point X="5.125" Y="9.688" />
+        <Point X="5.125" Y="10" />
+      </Path>
+    </InheritanceLine>
+    <AssociationLine Name="turn" Type="TurnState">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.298" Y="0.072" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AIAABJAAQAAhUCYAAQADAEAACACkAQDgMsgGgQACAAA=</HashCode>
+      <FileName>Assets\Scripts\StateMachine\InGameState.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="turn" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="PlaceUnitState">
+    <Position X="0.75" Y="10" Width="3.25" />
+    <InheritanceLine Type="GameState" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.625" Y="6.68" />
+        <Point X="4.625" Y="9.7" />
+        <Point X="3.438" Y="9.7" />
+        <Point X="3.438" Y="10" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAABCACAIIBAAAAIAAAACAAEAAYAAAEAAgAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\StateMachine\PlaceUnitState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameUI">
+    <Position X="10.75" Y="0.5" Width="2.25" />
+    <AssociationLine Name="MainMenuUIInstance" Type="MainMenuUI" FixedFromPoint="true">
+      <Path>
+        <Point X="11" Y="1.733" />
+        <Point X="11" Y="3" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.55" Y="0.33" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="InGameUIInstance" Type="InGameUI" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="13" Y="0.938" />
+        <Point X="17.5" Y="0.938" />
+        <Point X="17.5" Y="3" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="HelpUIInstance" Type="HelpUI" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="13" Y="1.5" />
+        <Point X="14.5" Y="1.5" />
+        <Point X="14.5" Y="3" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAABAAAAAAAAAAAAAEAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\UI\GameUI.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="MainMenuUIInstance" />
+      <Field Name="InGameUIInstance" />
+      <Field Name="HelpUIInstance" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MainMenuUI">
+    <Position X="10.75" Y="3" Width="2.25" />
+    <InheritanceLine Type="UILogic" ManuallyRouted="true" FixedFromPoint="true">
+      <Path>
+        <Point X="11" Y="6" />
+        <Point X="11.875" Y="6" />
+        <Point X="11.875" Y="4.81" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAIAAAAAAAAAAAAgAAAAAAAg=</HashCode>
+      <FileName>Assets\Scripts\UI\MainMenuUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UILogic" Collapsed="true">
+    <Position X="9.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\UI\UILogic.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HelpUI">
+    <Position X="13.25" Y="3" Width="2.5" />
+    <InheritanceLine Type="UILogic" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="11" Y="6" />
+        <Point X="14.5" Y="6" />
+        <Point X="14.5" Y="5.771" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIGAAQAAAAADAAAIAAAAAAAABAAAAAAEAAA=</HashCode>
+      <FileName>Assets\Scripts\UI\HelpUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InGameUI">
+    <Position X="16" Y="3" Width="3" />
+    <InheritanceLine Type="UILogic" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="11" Y="6" />
+        <Point X="17.5" Y="6" />
+        <Point X="17.5" Y="5.771" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAACACAAAAABAAAAAAAAIAAAgAAAgAE=</HashCode>
+      <FileName>Assets\Scripts\UI\InGameUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TurnState">
+    <Position X="8.5" Y="15.5" Width="2.75" />
+    <Members>
+      <Field Name="forbiddenEventErrorMessage" Hidden="true" />
+      <Method Name="TurnState" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAKAAEEBAQAAAAAAAAAAAEAEABIAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\TurnStateMachine\TurnState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ReadyState">
+    <Position X="11.25" Y="19.5" Width="2.75" />
+    <InheritanceLine Type="ActionsDisabledState" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="13.125" Y="18.752" />
+        <Point X="13.125" Y="19.125" />
+        <Point X="12.625" Y="19.125" />
+        <Point X="12.625" Y="19.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAEABAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\TurnStateMachine\ReadyState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SelectedState">
+    <Position X="12" Y="13" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAACAAkABAQAAAAAAAAAAAEQEAAIAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\TurnStateMachine\SelectedState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ActionsDisabledState">
+    <Position X="12" Y="16.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAIAAAAAAQAAA=</HashCode>
+      <FileName>Assets\Scripts\TurnStateMachine\ActionsDisabledState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ActionExecutionState">
+    <Position X="14.25" Y="19.5" Width="2.75" />
+    <InheritanceLine Type="ActionsDisabledState" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="13.125" Y="18.752" />
+        <Point X="13.125" Y="19.125" />
+        <Point X="15.625" Y="19.125" />
+        <Point X="15.625" Y="19.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAKAAgABAAAAAAAAAAAAAEAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\TurnStateMachine\ActionExecutionState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MoveSelectedState">
+    <Position X="15.25" Y="13" Width="2.75" />
+    <InheritanceLine Type="SelectedState" FixedFromPoint="true">
+      <Path>
+        <Point X="14.5" Y="15.562" />
+        <Point X="14.875" Y="15.562" />
+        <Point X="14.875" Y="13.809" />
+        <Point X="15.25" Y="13.809" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\TurnStateMachine\MoveSelectedState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FieldAttackSelectedState">
+    <Position X="22" Y="13" Width="2.75" />
+    <InheritanceLine Type="SelectedState" FixedFromPoint="true">
+      <Path>
+        <Point X="14.5" Y="15.562" />
+        <Point X="21.625" Y="15.562" />
+        <Point X="21.625" Y="13.809" />
+        <Point X="22" Y="13.809" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\TurnStateMachine\FieldAttackSelectedState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnitAttackSelectedState">
+    <Position X="18.75" Y="13" Width="2.5" />
+    <InheritanceLine Type="SelectedState" FixedFromPoint="true">
+      <Path>
+        <Point X="14.5" Y="15.562" />
+        <Point X="18.375" Y="15.562" />
+        <Point X="18.375" Y="13.809" />
+        <Point X="18.75" Y="13.809" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\TurnStateMachine\UnitAttackSelectedState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HelicopterSpecialAttackSelectedState">
+    <Position X="21.75" Y="16.75" Width="3" />
+    <InheritanceLine Type="SelectedState" FixedFromPoint="true">
+      <Path>
+        <Point X="14.5" Y="15.562" />
+        <Point X="21.625" Y="15.562" />
+        <Point X="21.625" Y="18.073" />
+        <Point X="21.75" Y="18.073" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAEABAAAAAAAAAQAAAEAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Assets\Scripts\TurnStateMachine\HelicopterySpecialAttackSelectedState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TankSpecialAttackSelectedState">
+    <Position X="15.25" Y="16.75" Width="3" />
+    <InheritanceLine Type="SelectedState" FixedFromPoint="true">
+      <Path>
+        <Point X="14.5" Y="15.562" />
+        <Point X="14.875" Y="15.562" />
+        <Point X="14.875" Y="17.881" />
+        <Point X="15.25" Y="17.881" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAABAAAAAAAAAAAAAEAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Assets\Scripts\TurnStateMachine\TankSpecialAttackSelectedState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArtillerySpecialAttackSelectedState">
+    <Position X="18.5" Y="16.75" Width="3" />
+    <InheritanceLine Type="SelectedState" FixedFromPoint="true">
+      <Path>
+        <Point X="14.5" Y="15.562" />
+        <Point X="18.375" Y="15.562" />
+        <Point X="18.375" Y="17.881" />
+        <Point X="18.5" Y="17.881" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAABAAAAAAAAAIAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\TurnStateMachine\ArtillerySpecialAttackSelectedState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Unit">
+    <Position X="25.25" Y="0.75" Width="3.25" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="Unit.UnitMovementStatistics" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\Units\Unit.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Unit.UnitAttackStatistics" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\Units\Unit.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Unit.UnitHealthStatistics" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\Units\Unit.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AoCEAKAAIIAAIgghMCIDSAAAAYAoRiAAABACYEgAAEg=</HashCode>
+      <FileName>Assets\Scripts\Units\Unit.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IFVUnit">
+    <Position X="29.25" Y="0.75" Width="2.75" />
+    <InheritanceLine Type="Unit" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="28.5" Y="3.5" />
+        <Point X="30.625" Y="3.5" />
+        <Point X="30.625" Y="3.011" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAhAAAAABEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Units\IFVUnit.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tank">
+    <Position X="32.25" Y="0.75" Width="2.25" />
+    <NestedTypes>
+      <Class Name="Tank.collider_unit" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\Units\Tank.cs</NewMemberFileName>
+        </TypeIdentifier>
+        <Lollipop Position="0.2" />
+      </Class>
+    </NestedTypes>
+    <InheritanceLine Type="Unit" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="28.5" Y="3.5" />
+        <Point X="33.469" Y="3.5" />
+        <Point X="33.469" Y="3.078" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgABAAABBAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Units\Tank.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HeavyTank">
+    <Position X="35" Y="0.75" Width="2.75" />
+    <InheritanceLine Type="Unit" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="28.5" Y="3.5" />
+        <Point X="36.375" Y="3.5" />
+        <Point X="36.375" Y="3.204" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAhAAAAABEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Units\HeavyTank.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Helicopter">
+    <Position X="29.25" Y="4.25" Width="2.75" />
+    <InheritanceLine Type="Unit" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="28.5" Y="3.5" />
+        <Point X="30.625" Y="3.5" />
+        <Point X="30.625" Y="4.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIgABAAABBAAAAAAAQAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Units\Helicopter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Artillery">
+    <Position X="32.25" Y="4.25" Width="2.75" />
+    <InheritanceLine Type="Unit" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="28.5" Y="3.5" />
+        <Point X="33.5" Y="3.5" />
+        <Point X="33.5" Y="4.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAgABAAABBAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Units\Artillery.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TracksAnimation">
+    <Position X="29.25" Y="7.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAEAAAAAgAAAIAAIAAAIRAKEAAAAAAIAEA=</HashCode>
+      <FileName>Assets\Scripts\Units\TracksAnimation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RangeProjector">
+    <Position X="32" Y="7.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABIABCAABAAAAAAAAAAAAAAAAIAAAAgEAAgAAEA=</HashCode>
+      <FileName>Assets\Models\Projectors\Sources\Scripts\RangeProjector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SelectionMarker">
+    <Position X="32" Y="10.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAgABAAIACAAAhAAAAAAAAAAAAAAAAAAQAAAAhBAAkA=</HashCode>
+      <FileName>Assets\Models\SelectionMarker\Scripts\SelectionMarker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapManager">
+    <Position X="9.5" Y="7.75" Width="2.25" />
+    <AssociationLine Name="Observer" Type="PositionObserver" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="9.875" Y="7.75" />
+        <Point X="9.875" Y="7.375" />
+        <Point X="12" Y="7.375" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAACEA=</HashCode>
+      <FileName>Assets\Scripts\Maps\MapManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Observer" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="Players" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="PlayerInfo">
+    <Position X="9.5" Y="9.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAAAQAAAAAAAAAEBEAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Maps\PlayerInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PositionObserver">
+    <Position X="12" Y="7" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAAIAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Maps\PositionObserver.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PositionEventArgs">
+    <Position X="12" Y="9.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Maps\PositionObserver.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StrategyLook">
+    <Position X="14.5" Y="9.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAEASAAAAQAAAAAAAAAAAAAABAAAABAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Maps\StrategyLook.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MinimapLook">
+    <Position X="14.5" Y="7" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAgAAEA=</HashCode>
+      <FileName>Assets\Scripts\Maps\MinimapLook.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectileController">
+    <Position X="18.5" Y="7" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABgAAAAAAAAAAAAAAABAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Resources\Scripts\ProjectileController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ButtonLogic">
+    <Position X="19.25" Y="3" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAACAgCAAAAAAAAAgAgAAABAkA=</HashCode>
+      <FileName>Assets\Scripts\UI\ButtonLogic.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="GameStateEnum">
+    <Position X="3.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAARAQAAAACAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Assets\Scripts\StateMachine\GameState.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="UnitTypeEnum">
+    <Position X="22.5" Y="0.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAACgACAAAAAAAAAAAAEAAAgAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Units\Unit.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="DifficultTerrainMoveAbilityEnum">
+    <Position X="22.5" Y="3.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAEAAE=</HashCode>
+      <FileName>Assets\Scripts\Units\Unit.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="AttackAreaEnum">
+    <Position X="22.5" Y="2.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Assets\Scripts\Units\Unit.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SelectionMode">
+    <Position X="30.25" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAACAAAABAAQIAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Models\SelectionMarker\Scripts\SelectionMarker.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

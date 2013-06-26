@@ -2,6 +2,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>
+/// Represents tank type of unit.
+/// </summary>
 public class Tank : Unit
 {
 	private bool canUse = true;
@@ -16,6 +19,7 @@ public class Tank : Unit
 			return 1;
 		}
 	}
+
 	/// <summary>
 	/// Uses the special ability which is attack all enemy units on line between this Tank 
 	/// and point defined in parameter position. The first hited enemy get 100% of normal attack value
@@ -60,15 +64,20 @@ public class Tank : Unit
 			}
 			canUse = false;
 		}
-		//Deselect();
-		//SelectRange(SelectionMode.NoAction, 0.0f);
-		//OnActionCompleted();
-    }   
+    }
+
+    /// <summary>
+    /// Resets per turn statistics.
+    /// </summary>
 	public override void EndTurn ()
 	{
         base.EndTurn();
 		canUse = true;
 	}
+
+    /// <summary>
+    /// Selects unit for special ability.
+    /// </summary>
 	public override void SelectSpecialAbility ()
 	{
 		if(canUse)
