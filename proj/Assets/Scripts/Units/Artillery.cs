@@ -1,16 +1,27 @@
 ﻿using System;
 using UnityEngine;
 
+/// <summary>
+/// Represents artillery type of unit.
+/// </summary>
 public class Artillery : Unit
 {
 	private bool canUse = true;
 	private const float radius = 30.0f;
 
+    /// <summary>
+    /// Not supported unit attack type.
+    /// </summary>
+    /// <param name="enemy">Enemy unit target.</param>
     public override void Attack(Unit enemy)
     {
         throw new NotSupportedException();
     }
 
+    /// <summary>
+    /// Processes attack field attack on target point.
+    /// </summary>
+    /// <param name="target">Target point.</param>
     public override void Attack(Vector3 target)
     {
         if (CanAttack(target))
@@ -43,12 +54,18 @@ public class Artillery : Unit
 		}
     }  
  
+    /// <summary>
+    /// Resets per turn statistics.
+    /// </summary>
 	public override void EndTurn ()
 	{
         base.EndTurn();
 		canUse = true;
 	}
 
+    /// <summary>
+    /// Selects unit for special ability.
+    /// </summary>
 	public override void SelectSpecialAbility ()
 	{
 		if(canUse)

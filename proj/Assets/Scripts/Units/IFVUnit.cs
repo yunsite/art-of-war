@@ -1,17 +1,23 @@
 ﻿using System;
 using UnityEngine;
 
+/// <summary>
+/// Represents IFV type of unit.
+/// </summary>
 public class IFVUnit : Unit
 {
-	
     private int toursToEndSpecial;
     private float movementRangeBeforeSpecial;
+
+    /// <summary>
+    /// Creates IFV unit.
+    /// </summary>
     public IFVUnit()
     {
         toursToEndSpecial = 0;
     }
 	/// <summary>
-	/// Uses the special ability which is increase movement ability
+	/// Uses the special ability which increases movement ability.
 	/// </summary>
     public override void UseSpecial()
     {
@@ -23,6 +29,9 @@ public class IFVUnit : Unit
         }
     }
 
+    /// <summary>
+    /// Resets per turn statistics.
+    /// </summary>
     public override void EndTurn()
     {
         base.EndTurn();

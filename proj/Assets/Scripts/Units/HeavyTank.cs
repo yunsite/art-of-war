@@ -1,18 +1,25 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Represents heavy tank type of unit.
+/// </summary>
 public class HeavyTank : Unit
 {
     private int toursToEndSpecial;
     private float defenceBeforeSpecial;
     private float movementRangeBeforeSpecial;
+
+    /// <summary>
+    /// Creates heavy tank.
+    /// </summary>
     public HeavyTank()
     {
         toursToEndSpecial = 0;
     }
 	
 	/// <summary>
-	/// Uses the special ability which is increase defence for 2 rounds with block movement ability
+	/// Uses the special ability which is increase defence for 2 rounds with block movement ability.
 	/// </summary>
     public override void UseSpecial()
     {
@@ -28,7 +35,7 @@ public class HeavyTank : Unit
     }
 	
 	/// <summary>
-	/// Ends the turn -> make normal defence and movement ability
+	/// Ends the turn -> make normal defence and movement ability.
 	/// </summary>
     public override void EndTurn()
     {
