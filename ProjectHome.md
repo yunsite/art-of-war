@@ -1,0 +1,1 @@
+Art of War is a turn-based strategy game which emphasis the tactical aspect of battles.
